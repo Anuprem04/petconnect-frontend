@@ -8,7 +8,7 @@ import '@mantine/core/styles.css';
  import '@mantine/dates/styles.css';
  import '@mantine/dropzone/styles.css';
  import '@mantine/code-highlight/styles.css';
-import {LandingPage} from './components/LandingPage';
+import {LandingPage} from './components/home/LandingPage';
 
 function App() {
 

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Anchor, Box, Burger, Container, Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import logo from '../assets/logo2.png';
+import logo from '../../assets/logo2.png';
 
 import classes from './LandingPage.module.css';
 
