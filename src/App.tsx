@@ -8,14 +8,13 @@ import '@mantine/core/styles.css';
  import '@mantine/dates/styles.css';
  import '@mantine/dropzone/styles.css';
  import '@mantine/code-highlight/styles.css';
-import { Button } from '@mantine/core';
-import LandingPage from './components/LandingPage';
+import {LandingPage} from './components/LandingPage';
 
 function App() {
 
   return (
     <LandingPage>
-      
+
     </LandingPage>
   )
 }

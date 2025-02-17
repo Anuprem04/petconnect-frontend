@@ -9,10 +9,11 @@ export const theme = createTheme({
   primaryColor: 'orange', 
   fontFamily: 'Open Sans, sans-serif',
   defaultRadius: 'md',
+  
 });
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
-    <MantineProvider theme={theme}>
+    <MantineProvider defaultColorScheme="dark" theme={theme}>
     <App />
     </MantineProvider>
   </StrictMode>,
