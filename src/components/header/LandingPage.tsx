@@ -3,25 +3,24 @@ import { Anchor, Box, Burger, Container, Group } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import logo from '../../assets/logo2.png';
 
-import classes from './Header.module.css';
+import classes from './LandingPage.module.css';
 import { useNavigate } from 'react-router-dom';
 
-
+const navigate = useNavigate();
 const userLinks = [
   { link: '#', label: 'About Us' },
   { link: '#', label: 'Contact Us' }
 ];
 
 const mainLinks = [
-  {link : '/', label: 'Home'},
   { link: '/login', label: 'Login/Sign Up' },
   { link: '#', label: 'Shelter Services' }
 ];
 
-export function Header({ mainLinks :[]} ) {
+export function LandingPage() {
   const [opened, { toggle }] = useDisclosure(false);
   const [active, setActive] = useState(0);
-  const navigate = useNavigate();
+
   const mainItems = mainLinks.map((item, index) => (
     <Anchor<'a'>
       href={item.link}
@@ -31,7 +30,7 @@ export function Header({ mainLinks :[]} ) {
       onClick={(event: any) => {
         event.preventDefault();
         setActive(index);
-        navigate(item.link)
+        navigate(item.link);
       }}
     >
       {item.label}

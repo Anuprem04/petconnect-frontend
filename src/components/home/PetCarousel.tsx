@@ -1,5 +1,5 @@
 import { Carousel } from '@mantine/carousel';
-import { Button, Paper, Text, Title, useMantineTheme } from '@mantine/core';
+import { Paper, Text, Title, useMantineTheme } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import classes from './PetCarousel.module.css';
 import { useRef } from 'react';
