@@ -1,4 +1,6 @@
+import { Footer } from '../footer/Footer';
 import { Header } from '../header/Header';
+import { PetCarousel } from './PetCarousel';
 
 
 
@@ -8,5 +10,5 @@ const mainLinks = [
 ];
 
 export function LandingPage() {
- return (<Header mainLinks={mainLinks}/>)
+ return (<><Header mainLinks={mainLinks}/><PetCarousel/><Footer/></>)
 }
