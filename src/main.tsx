@@ -6,7 +6,7 @@ import { createTheme, MantineProvider } from '@mantine/core';
 
 export const theme = createTheme({
   /** Add your theme overrides here */
-  primaryColor: 'orange', 
+  primaryColor: 'yellow', 
   fontFamily: 'Open Sans, sans-serif',
   defaultRadius: 'md',
   
