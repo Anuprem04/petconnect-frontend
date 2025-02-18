@@ -1,5 +1,7 @@
+import { Footer } from '../footer/Footer';
 import { Header } from '../header/Header';
-
+import { Quote } from '../quote/Quote';
+import { PetCarousel } from './PetCarousel';
 
 
 const mainLinks = [
@@ -8,5 +10,5 @@ const mainLinks = [
 ];
 
 export function LandingPage() {
- return (<Header mainLinks={mainLinks}/>)
+ return (<><Header mainLinks={mainLinks}/><PetCarousel/><Quote/><Footer/></>)
 }
