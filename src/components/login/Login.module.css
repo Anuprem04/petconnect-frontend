@@ -1,0 +1,23 @@
+.wrapper {
+    min-height: 900px;
+    background-size: cover;
+    background-image: url(https://unsplash.com/photos/person-holding-brown-tabby-cat-9ymXyNCouyU);
+  }
+  
+  .form {
+    border-right: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-7));
+    min-height: 900px;
+    max-width: 450px;
+    padding-top: 80px;
+  
+    @media (max-width: --mantine-breakpoint-sm) {
+      max-width: 100%;
+    }
+  }
+  
+  .title {
+    color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+    font-family:
+      Greycliff CF,
+      var(--mantine-font-family);
+  }
