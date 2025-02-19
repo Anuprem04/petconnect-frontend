@@ -13,6 +13,7 @@ import {LandingPage} from './components/home/LandingPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Login } from './components/login/Login';
 import { ForgotPassword } from './components/login/ForgotPassword';
+import { Register } from './components/login/Register';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />}/>
       </Routes>
     </Router>

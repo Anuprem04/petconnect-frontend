@@ -1,4 +1,5 @@
 import { IconArrowLeft } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
 import {
   Anchor,
   Box,
@@ -14,6 +15,11 @@ import {
 import classes from './ForgotPassword.module.css';
 
 export function ForgotPassword() {
+    const navigate = useNavigate();
+
+  const handleBackToLogin = () => {
+    navigate('/login'); // Navigate to the login page
+  };
   return (
     <div className={classes.wrapper}>
     <Container size={460} my={30}>
@@ -27,7 +33,7 @@ export function ForgotPassword() {
       <Paper withBorder shadow="md" p={30} radius="md" mt="xl">
         <TextInput label="Your email" placeholder="me@mantine.dev" required />
         <Group justify="space-between" mt="lg" className={classes.controls}>
-          <Anchor c="dimmed" size="sm" className={classes.control}>
+          <Anchor c="dimmed" size="sm" className={classes.control}onClick={handleBackToLogin} style={{ cursor: 'pointer' }} >
             <Center inline>
               <IconArrowLeft size={12} stroke={1.5} />
               <Box ml={5}>Back to the login page</Box>

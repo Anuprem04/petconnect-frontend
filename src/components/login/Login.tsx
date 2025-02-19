@@ -16,7 +16,9 @@ import {
 
     const handleRegisterClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
+        navigate('/register');
       };
+      
       const handleForgotPasswordClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
         navigate('/forgot-password');
