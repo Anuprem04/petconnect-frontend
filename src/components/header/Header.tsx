@@ -15,7 +15,7 @@ const userLinks = [
 const mainLinks = [
   {link : '/', label: 'Home'},
   { link: '/login', label: 'Login/Sign Up' },
-  { link: '#', label: 'Shelter Services' }
+  { link: '/shelter', label: 'Shelter Services' }
 ];
 
 export function Header({ mainLinks :[]} ) {

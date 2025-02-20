@@ -14,6 +14,8 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Login } from './components/login/Login';
 import { ForgotPassword } from './components/login/ForgotPassword';
 import { Register } from './components/login/Register';
+import { Shelter } from './components/shelter/Shelter';
+import { RegisterShelter } from './components/shelter/RegisterShelter';
 
 function App() {
   return (
@@ -23,6 +25,8 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPassword />}/>
+        <Route path="/shelter" element={<Shelter />} />
+        <Route path="/registerShelter" element={<RegisterShelter />} />
       </Routes>
     </Router>
   );

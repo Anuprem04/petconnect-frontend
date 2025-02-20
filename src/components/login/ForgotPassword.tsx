@@ -26,7 +26,7 @@ export function ForgotPassword() {
       <Title className={classes.title} ta="center">
         Forgot your password?
       </Title>
-      <Text c="dimmed" fz="sm" ta="center">
+      <Text c="dimmed" fz="sm" ta="center" style={{ color: '#333' }}>
         Enter your email to get a reset link
       </Text>
 

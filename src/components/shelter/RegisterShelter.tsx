@@ -2,52 +2,44 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Button,
-  Checkbox,
-  Group,
   Paper,
   PasswordInput,
   Text,
   TextInput,
   Title,
 } from '@mantine/core';
-import classes from './Register.module.css';
+import classes from './RegisterShelter.module.css';
 
-export function Register() {
+export function RegisterShelter() {
   const navigate = useNavigate();
+  const [id, setId] = useState('');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
   const [city, setCity] = useState('');
-  const [petPreferences, setPetPreferences] = useState<string[]>([]);
-
-  const handleCheckboxChange = (preference: string) => {
-    setPetPreferences((prevPreferences) =>
-      prevPreferences.includes(preference)
-        ? prevPreferences.filter((item) => item !== preference) // Remove preference if already selected
-        : [...prevPreferences, preference] // Add preference if not selected
-    );
-  };
+  const [number, setNumber] = useState('');
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    if (password === confirmPassword) {
-      // Logic to handle registration (e.g., API call)
-      console.log('User registered successfully');
-      navigate('/login'); // Navigate back to login after successful registration
-    } else {
-      alert("Passwords don't match!");
-    }
+    navigate('/shelter'); // Navigate back to login after successful registration
   };
 
   return (
     <div className={classes.wrapper}>
       <Paper className={classes.form} radius={0} p={30}>
         <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
-        PetConnect Welcome Wagon
+        ShelterSphere Welcome Wagon
         </Title>
 
         <form onSubmit={handleSubmit}>
+        <TextInput
+            label="ShelterID"
+            placeholder="Shelter ID"
+            size="md"
+            value={id}
+            onChange={(e) => setId(e.target.value)}
+            styles={{ label: { color: 'yellow' } }}
+          />
           <TextInput
             label="Name"
             placeholder="Your full name"
@@ -73,15 +65,6 @@ export function Register() {
             onChange={(e) => setPassword(e.target.value)}
             styles={{ label: { color: 'yellow' } }}
           />
-          <PasswordInput
-            label="Confirm Password"
-            placeholder="Confirm your password"
-            mt="md"
-            size="md"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            styles={{ label: { color: 'yellow' } }}
-          />
           <TextInput
             label="City"
             placeholder="Your city"
@@ -90,31 +73,14 @@ export function Register() {
             onChange={(e) => setCity(e.target.value)}
             styles={{ label: { color: 'yellow' } }}
           />
-          <Text mt="md" style={{ fontWeight: 500, fontSize: '1rem', color: 'yellow' }}>
-            Pet Preference
-          </Text>
-          <Group mt="xs">
-            <Checkbox
-              label="Dogs"
-              checked={petPreferences.includes('Dog')}
-              onChange={() => handleCheckboxChange('Dog')}
-            />
-            <Checkbox
-              label="Cats"
-              checked={petPreferences.includes('Cat')}
-              onChange={() => handleCheckboxChange('Cat')}
-            />
-            <Checkbox
-              label="Birds"
-              checked={petPreferences.includes('Bird')}
-              onChange={() => handleCheckboxChange('Bird')}
-            />
-            <Checkbox
-              label="Fishes"
-              checked={petPreferences.includes('Fish')}
-              onChange={() => handleCheckboxChange('Fish')}
-            />
-          </Group>
+          <TextInput
+            label="Phone"
+            placeholder="Your Contact Number"
+            size="md"
+            value={number}
+            onChange={(e) => setNumber(e.target.value)}
+            styles={{ label: { color: 'yellow' } }}
+          />
           <Button fullWidth mt="xl" size="md" type="submit">
             Register
           </Button>
@@ -124,7 +90,7 @@ export function Register() {
           Already have an account?{' '}
           <Text
             component="a"
-            href="/login"
+            href="/shelter"
             fw={700}
             style={{ color: 'yellow', cursor: 'pointer' }}
           >
