@@ -1,6 +1,6 @@
 import { Button, Group, Checkbox, PasswordInput, TextInput, Title, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import classes from './Register.module.css';
+import classes from './RegisterUser.module.css';
 
 export function Register() {
   const form = useForm({

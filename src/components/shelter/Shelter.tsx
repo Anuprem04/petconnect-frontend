@@ -33,9 +33,9 @@ import {
             Welcome to ShelterSphere
           </Title>
   
-          <TextInput label="Email" placeholder="hello@gmail.com" size="md" styles={{ label: { color: '#333'} }} />
-          <PasswordInput label="Password" placeholder="Your password" mt="md" size="md" styles={{ label: { color:  '#333'} }} />
-          <Text ta="right" mt="xs" style={{ fontSize: '0.9rem', color: '#007bff' }}>
+          <TextInput label="Email" placeholder="hello@gmail.com" size="md" styles={{ label: { color: '#fff'} }} />
+          <PasswordInput label="Password" placeholder="Your password" mt="md" size="md" styles={{ label: { color:  '#fff'} }} />
+          <Text ta="right" mt="xs" style={{ fontSize: '0.9rem', color: 'black' }}>
                     <Anchor<'a'> href="#" onClick={handleForgotPasswordClick} fw={500} style={{ color: 'black' }}>
                         Forgot Password?
                     </Anchor>
@@ -44,13 +44,13 @@ import {
             Login
           </Button>
   
-          <Text ta="center" mt="md" style={{ color: '#333' }}>
+          <Text ta="center" mt="md" style={{ color: '#fff' }}>
             Don&apos;t have an account?{' '}
             <Anchor<'a'> href="#" fw={700} onClick={handleShelterRegisterClick} style={{ color: 'black' }}>
               Register
             </Anchor>
           </Text>
-          <Text ta="center" mt="lg" style={{ color: '#333' }}>
+          <Text ta="center" mt="lg" style={{ color: '#fff' }}>
           <Anchor<'a'>
             href="#"
             onClick={handleBackToHomeClick}

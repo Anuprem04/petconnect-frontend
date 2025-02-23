@@ -12,10 +12,10 @@ import '@mantine/carousel/styles.css';
 import {LandingPage} from './components/home/LandingPage';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { Login } from './components/login/Login';
-import { ForgotPassword } from './components/login/ForgotPassword';
-import { Register } from './components/login/Register';
+import { ForgotPassword } from './components/forgotPassword/ForgotPassword';
+import { Register } from './components/register/RegisterUser';
 import { Shelter } from './components/shelter/Shelter';
-import { RegisterShelter } from './components/shelter/RegisterShelter';
+import { RegisterShelter } from './components/register/RegisterShelter';
 
 function App() {
   return (
