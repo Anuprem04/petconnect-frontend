@@ -1,35 +1,84 @@
-.wrapper {
-    width: 100vw;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    position:fixed;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    background-image: url(https://images.unsplash.com/photo-1516466723877-e4ec1d736c8a?q=80&w=2134&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+/* .bg {
+  background-image: url(https://images.unsplash.com/photo-1545529468-42764ef8c85f?q=80&w=2073&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
+  background-size: cover ;
+  background-position: center;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+} */
+
+/* .glassContainer {
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+} */
+
+
+
+/* Register.module.css */
+
+/* Full-screen background */
+/* Global styles (e.g., in your index.css or global.css) */
+
+/* Register.module.css */
+/* Global rule to ensure padding is included */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.bg {
+  background-image: url('src/assets/register.avif');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+}
+
+.glassContainer {
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 90%;
+  max-width: 360px;
+  max-height: calc(100vh - 40px);
+  overflow-y: hidden; /* Hide scroll */
+
+  padding: 1rem;  /* Reduced padding */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  color: #fff;
+}
+
+/* Media query for smaller viewport heights */
+@media (max-height: 600px) {
+  .glassContainer {
+    padding: 0.75rem; /* Reduce padding further */
+    font-size: 0.9rem; /* Reduce font size if necessary */
+    max-height: calc(100vh - 20px); /* Increase available space */
+    overflow-y: auto; /* Ensure no scroll */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
-  
-  .form {
-    background-color: rgba(255, 255, 255, 0.2);
-    padding: 2rem;
-    border-radius: 90px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 400px;
+  .glassContainer::-webkit-scrollbar {
+    display: none;
   }
-  
-  .title {
-    color:black;
-    font-size: 26px;
-    font-weight: 900;
-    font-family: Greycliff CF, var(--mantine-font-family);
+}
+
+/* Optionally adjust for larger screens */
+@media (min-width: 768px) {
+  .glassContainer {
+    max-width: 420px;
   }
-  
-  .textInput {
-    margin-bottom: 16px;
-  }
-  
+}
+
+

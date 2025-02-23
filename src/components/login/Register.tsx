@@ -1,137 +1,130 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import {
-  Button,
-  Checkbox,
-  Group,
-  Paper,
-  PasswordInput,
-  Text,
-  TextInput,
-  Title,
-} from '@mantine/core';
+import { Button, Group, Checkbox, PasswordInput, TextInput, Title, Text } from '@mantine/core';
+import { useForm } from '@mantine/form';
 import classes from './Register.module.css';
 
 export function Register() {
-  const navigate = useNavigate();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [city, setCity] = useState('');
-  const [petPreferences, setPetPreferences] = useState<string[]>([]);
+  const form = useForm({
+    initialValues: {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      city: '',
+      petPreferences: [] as string[],
+    },
+    validate: {
+      name: (value) => (value.trim().length < 2 ? 'Name must be at least 2 characters' : null),
+      email: (value) => (!/^\S+@\S+$/.test(value) ? 'Invalid email' : null),
+      password: (value) => (value.length < 6 ? 'Password must be at least 6 characters' : null),
+      confirmPassword: (value, values) =>
+        value !== values.password ? 'Passwords do not match' : null,
+      city: (value) => (value.trim().length === 0 ? 'City is required' : null),
+    },
+  });
 
-  const handleCheckboxChange = (preference: string) => {
-    setPetPreferences((prevPreferences) =>
-      prevPreferences.includes(preference)
-        ? prevPreferences.filter((item) => item !== preference) // Remove preference if already selected
-        : [...prevPreferences, preference] // Add preference if not selected
-    );
-  };
-
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    if (password === confirmPassword) {
-      // Logic to handle registration (e.g., API call)
-      console.log('User registered successfully');
-      navigate('/login'); // Navigate back to login after successful registration
-    } else {
-      alert("Passwords don't match!");
-    }
-  };
+  const handleSubmit = form.onSubmit((values) => {
+    console.log('Form submitted:', values);
+    // Add your registration logic here (e.g., API call)
+  });
 
   return (
-    <div className={classes.wrapper}>
-      <Paper className={classes.form} radius={0} p={30}>
-        <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
-        PetConnect Welcome Wagon
+    <div className={classes.bg}>
+      <div className={classes.glassContainer}>
+        <Title order={2} ta="center">
+          PetConnect Welcome Wagon
         </Title>
+        <Text size="sm" align="center" mt={5}>
+          Register to find your perfect pet match!
+        </Text>
 
         <form onSubmit={handleSubmit}>
           <TextInput
             label="Name"
             placeholder="Your full name"
-            size="md"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-            styles={{ label: { color: 'yellow' } }}
+            mt="md"
+            name="name"
+            variant="filled"
+            {...form.getInputProps('name')}
           />
           <TextInput
             label="Email"
             placeholder="hello@example.com"
-            size="md"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            styles={{ label: { color: 'yellow' } }}
+            mt="md"
+            name="email"
+            variant="filled"
+            {...form.getInputProps('email')}
           />
           <PasswordInput
             label="Password"
             placeholder="Your password"
             mt="md"
-            size="md"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            styles={{ label: { color: 'yellow' } }}
+            name="password"
+            variant="filled"
+            {...form.getInputProps('password')}
           />
-          <PasswordInput
-            label="Confirm Password"
-            placeholder="Confirm your password"
-            mt="md"
-            size="md"
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-            styles={{ label: { color: 'yellow' } }}
-          />
+        
           <TextInput
             label="City"
             placeholder="Your city"
-            size="md"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
-            styles={{ label: { color: 'yellow' } }}
+            mt="md"
+            name="city"
+            variant="filled"
+            {...form.getInputProps('city')}
           />
-          <Text mt="md" style={{ fontWeight: 500, fontSize: '1rem', color: 'yellow' }}>
-            Pet Preference
+
+          <Text mt="md" weight={500}>
+            Pet Preferences
           </Text>
           <Group mt="xs">
             <Checkbox
               label="Dogs"
-              checked={petPreferences.includes('Dog')}
-              onChange={() => handleCheckboxChange('Dog')}
+              checked={form.values.petPreferences.includes('Dogs')}
+              onChange={(event) => {
+                const updatedPreferences = event.currentTarget.checked
+                  ? [...form.values.petPreferences, 'Dogs']
+                  : form.values.petPreferences.filter((item) => item !== 'Dogs');
+                form.setFieldValue('petPreferences', updatedPreferences);
+              }}
             />
             <Checkbox
               label="Cats"
-              checked={petPreferences.includes('Cat')}
-              onChange={() => handleCheckboxChange('Cat')}
+              checked={form.values.petPreferences.includes('Cats')}
+              onChange={(event) => {
+                const updatedPreferences = event.currentTarget.checked
+                  ? [...form.values.petPreferences, 'Cats']
+                  : form.values.petPreferences.filter((item) => item !== 'Cats');
+                form.setFieldValue('petPreferences', updatedPreferences);
+              }}
             />
             <Checkbox
               label="Birds"
-              checked={petPreferences.includes('Bird')}
-              onChange={() => handleCheckboxChange('Bird')}
+              checked={form.values.petPreferences.includes('Birds')}
+              onChange={(event) => {
+                const updatedPreferences = event.currentTarget.checked
+                  ? [...form.values.petPreferences, 'Birds']
+                  : form.values.petPreferences.filter((item) => item !== 'Birds');
+                form.setFieldValue('petPreferences', updatedPreferences);
+              }}
             />
             <Checkbox
               label="Fishes"
-              checked={petPreferences.includes('Fish')}
-              onChange={() => handleCheckboxChange('Fish')}
+              checked={form.values.petPreferences.includes('Fishes')}
+              onChange={(event) => {
+                const updatedPreferences = event.currentTarget.checked
+                  ? [...form.values.petPreferences, 'Fishes']
+                  : form.values.petPreferences.filter((item) => item !== 'Fishes');
+                form.setFieldValue('petPreferences', updatedPreferences);
+              }}
             />
           </Group>
-          <Button fullWidth mt="xl" size="md" type="submit">
-            Register
-          </Button>
-        </form>
 
-        <Text ta="center" mt="md" style={{ color: '#333' }}>
-          Already have an account?{' '}
-          <Text
-            component="a"
-            href="/login"
-            fw={700}
-            style={{ color: 'yellow', cursor: 'pointer' }}
-          >
-            Login
-          </Text>
-        </Text>
-      </Paper>
+          <Group justify="center" mt="xl">
+            <Button type="submit" size="md">
+              Register
+            </Button>
+          </Group>
+        </form>
+      </div>
     </div>
   );
 }

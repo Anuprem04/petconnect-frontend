@@ -1,6 +1,6 @@
 .header {
     height: 84px;
-    margin-bottom: 20px;
+    margin-bottom: 120px;
     background-color: var(--mantine-color-body);
     border-bottom: 1px solid light-dark(var(--mantine-color-gray-3), var(--mantine-color-dark-4));
     position: fixed; /* Fixes the header at the top */
@@ -61,3 +61,4 @@
     color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
     text-decoration: none;
   }
+  

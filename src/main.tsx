@@ -7,7 +7,7 @@ import { createTheme, MantineProvider } from '@mantine/core';
 export const theme = createTheme({
   /** Add your theme overrides here */
   primaryColor: 'yellow', 
-  fontFamily: 'Open Sans, sans-serif',
+  fontFamily: 'Greycliff CF, sans-serif',
   defaultRadius: 'md',
   
 });

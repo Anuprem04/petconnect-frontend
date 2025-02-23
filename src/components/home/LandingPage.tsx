@@ -3,15 +3,15 @@ import { Header } from '../header/Header';
 import { Quote } from '../quote/Quote';
 import { PetCarousel } from './PetCarousel';
 import { Link } from 'react-router-dom';
+import classes from './LandingPage.module.css'
 
 
 const mainLinks = [
   { link: '/login', label: 'Login/Sign Up' },
-  { link: '/shelter', label: 'Shelter Services' }
+  { link: '#', label: 'Shelter Services' }
 ];
-
 export function LandingPage() {
- return (<><Header
+ return (<div className={classes.bg}><Header
   mainLinks={mainLinks.map((item) => ({
     ...item,
     link: (
@@ -25,5 +25,5 @@ export function LandingPage() {
         {item.label}
       </Link>
     ),
-}))}/><PetCarousel/><Quote/><Footer/></>)
+}))}/><PetCarousel/><Quote/><Footer/></div>)
 }
