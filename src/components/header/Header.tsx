@@ -1,11 +1,9 @@
 import { useState } from 'react';
-import { Anchor, Box, Burger, Container, Group } from '@mantine/core';
+import { Anchor, Box, Burger, Container, Drawer, Group, Stack } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import logo from '../../assets/logo2.png';
-
 import classes from './Header.module.css';
 import { useNavigate } from 'react-router-dom';
-
 
 const userLinks = [
   { link: '#', label: 'About Us' },
@@ -13,15 +11,16 @@ const userLinks = [
 ];
 
 const mainLinks = [
-  {link : '/', label: 'Home'},
+  { link: '/', label: 'Home' },
   { link: '/login', label: 'Login/Sign Up' },
   { link: '/shelter', label: 'Shelter Services' }
 ];
 
-export function Header({ mainLinks :[]} ) {
-  const [opened, { toggle }] = useDisclosure(false);
+export function Header({mainLinks : []}) {
+  const [opened, { toggle, close }] = useDisclosure(false);
   const [active, setActive] = useState(0);
   const navigate = useNavigate();
+
   const mainItems = mainLinks.map((item, index) => (
     <Anchor<'a'>
       href={item.link}
@@ -31,7 +30,8 @@ export function Header({ mainLinks :[]} ) {
       onClick={(event: any) => {
         event.preventDefault();
         setActive(index);
-        navigate(item.link)
+        navigate(item.link);
+        close();
       }}
     >
       {item.label}
@@ -50,27 +50,58 @@ export function Header({ mainLinks :[]} ) {
   ));
 
   return (
-    <header className={classes.header}>
-     <Container className={classes.inner} fluid px={50}>
-        <div style={{ display: 'flex', alignItems: 'center', marginLeft: '0' }}>
-          <img src={logo} alt="PetConnect Logo" style={{ height: 105, marginRight: '20px'}} />
-          <span style={{ fontSize: '40px', fontWeight: 'bold', fontStyle: 'italic', fontFamily: 'cursive', color: 'var(--mantine-color-yellow-8)' }}>PetConnect+</span>
-        </div>
-        <Box className={classes.links} visibleFrom="sm">
-          <Group justify="flex-end">{secondaryItems}</Group>
-          <Group gap={0} justify="flex-end" className={classes.mainLinks}>
+    <>
+      <header className={classes.header}>
+        <Container className={classes.inner} fluid px={50}>
+          <div style={{ display: 'flex', alignItems: 'center' }}>
+            <img src={logo} alt="PetConnect Logo" style={{ height: 105, marginRight: '20px' }} />
+            <span
+              style={{
+                fontSize: '40px',
+                fontWeight: 'bold',
+                fontStyle: 'italic',
+                fontFamily: 'cursive',
+                color: 'var(--mantine-color-yellow-8)'
+              }}
+            >
+              PetConnect+
+            </span>
+          </div>
+          <Box className={classes.links} visibleFrom="sm">
+            <Group justify="flex-end">{secondaryItems}</Group>
+            <Group gap={0} justify="flex-end" className={classes.mainLinks}>
+              {mainItems}
+            </Group>
+          </Box>
+          <Burger
+            opened={opened}
+            onClick={toggle}
+            className={classes.burger}
+            size="sm"
+            hiddenFrom="sm"
+          />
+        </Container>
+      </header>
+
+      <Drawer
+        opened={opened}
+        onClose={close}
+        title="Menu"
+        padding="md"
+        size="sm"
+        withCloseButton
+      >
+        <Stack gap="md">
+          {/* Main menu items vertically */}
+          <Stack gap="sm">
             {mainItems}
+          </Stack>
+          {/* Secondary links in one horizontal line */}
+          <Group gap="sm">
+            {secondaryItems}
           </Group>
-        </Box>
-        <Burger
-          opened={opened}
-          onClick={toggle}
-          className={classes.burger}
-          size="sm"
-          hiddenFrom="sm"
-        />
-      </Container>
-    </header>
-    
+        </Stack>
+      </Drawer>
+    </>
   );
 }

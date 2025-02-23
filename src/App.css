@@ -1,13 +1,20 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Disables scroll */
+  box-sizing: border-box;
+}
+
 #root {
-  min-height: 100vh;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Just in case */
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-/* max-width: 1280px; */
-margin: 0 auto;
-/* padding: 2rem; */
-text-align: center;
 }
+
 
 .logo {
   height: 6em;

@@ -9,14 +9,14 @@ import {
     TextInput,
     Title,
   } from '@mantine/core';
-  import classes from './Login.module.css';
+  import classes from './ShelterLogin.module.css';
   
-  export function Login() {
+  export function Shelter() {
     const navigate = useNavigate();
 
-    const handleRegisterClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
+    const handleShelterRegisterClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
         event.preventDefault();
-        navigate('/register');
+        navigate('/registerShelter');
       };
       
       const handleForgotPasswordClick = (event: React.MouseEvent<HTMLAnchorElement>) => {
@@ -30,11 +30,11 @@ import {
       <div className={classes.wrapper}>
         <Paper className={classes.form} radius={0} p={30}>
           <Title order={2} className={classes.title} ta="center" mt="md" mb={50}>
-            Welcome to PetConnect
+            Welcome to ShelterSphere
           </Title>
   
-          <TextInput label="Email" placeholder="hello@gmail.com" size="md" styles={{ label: { color: '#0d0f12'} }} />
-          <PasswordInput label="Password" placeholder="Your password" mt="md" size="md" styles={{ label: { color:  '#0d0f12'} }} />
+          <TextInput label="Email" placeholder="hello@gmail.com" size="md" styles={{ label: { color: '#fff'} }} />
+          <PasswordInput label="Password" placeholder="Your password" mt="md" size="md" styles={{ label: { color:  '#fff'} }} />
           <Text ta="right" mt="xs" style={{ fontSize: '0.9rem', color: 'black' }}>
                     <Anchor<'a'> href="#" onClick={handleForgotPasswordClick} fw={500} style={{ color: 'black' }}>
                         Forgot Password?
@@ -44,13 +44,13 @@ import {
             Login
           </Button>
   
-          <Text ta="center" mt="md" style={{ color: '#0d0f12' }}>
+          <Text ta="center" mt="md" style={{ color: '#fff' }}>
             Don&apos;t have an account?{' '}
-            <Anchor<'a'> href="#" fw={700} onClick={handleRegisterClick} style={{ color: 'black' }}>
+            <Anchor<'a'> href="#" fw={700} onClick={handleShelterRegisterClick} style={{ color: 'black' }}>
               Register
             </Anchor>
           </Text>
-          <Text ta="center" mt="lg" style={{ color: '#0d0f12' }}>
+          <Text ta="center" mt="lg" style={{ color: '#fff' }}>
           <Anchor<'a'>
             href="#"
             onClick={handleBackToHomeClick}
