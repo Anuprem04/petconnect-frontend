@@ -17,7 +17,7 @@
   justify-content: center;
   overflow: hidden;
   /* Use your desired background image for shelters */
-  background-image: url('src/assets/fish.avif');
+  background-image: url('https://images.unsplash.com/photo-1525253086316-d0c936c814f8?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
   
 }
 
@@ -29,12 +29,23 @@
   width: 90%;
   max-width: 360px;
   max-height: calc(100vh - 40px);
-  overflow-y: hidden;
+  /* overflow-y: hidden; */
   padding: 1rem;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   color: #fff;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+
+}
+.form::-webkit-scrollbar {
+  display: none;
 }
 
+/* For IE, Edge and Firefox */
+.form {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
 .title {
   color: #fff;
   font-size: 26px;
@@ -64,4 +75,9 @@
   .form {
     max-width: 420px;
   }
+}
+.scrollable {
+  max-height: calc(100vh - 200px); /* Adjust this value as needed */
+  overflow-y: auto;
+  padding-right: 0.5rem; /* Optional: adds space for scrollbar */
 }

@@ -1,37 +1,10 @@
-/* .bg {
-  background-image: url(https://images.unsplash.com/photo-1545529468-42764ef8c85f?q=80&w=2073&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D);
-  background-size: cover ;
-  background-position: center;
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-} */
 
-/* .glassContainer {
-  background: rgba(255, 255, 255, 0.2);
-  backdrop-filter: blur(10px);
-  border-radius: 16px;
-  padding: 2rem;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-} */
-
-
-
-/* Register.module.css */
-
-/* Full-screen background */
-/* Global styles (e.g., in your index.css or global.css) */
-
-/* Register.module.css */
-/* Global rule to ensure padding is included */
 *, *::before, *::after {
   box-sizing: border-box;
 }
 
 .bg {
-  background-image: url('src/assets/register.avif');
+  background-image: url('https://images.unsplash.com/photo-1504208434309-cb69f4fe52b0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
   background-size: cover;
   background-position: center;
   min-height: 100vh;
@@ -45,20 +18,28 @@
 }
 
 .glassContainer {
-  background-color: rgba(255, 255, 255, 0.2);
+  background-color: rgba(255, 255, 255, 0.3);
   backdrop-filter: blur(10px);
   border-radius: 16px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   width: 90%;
   max-width: 360px;
-  max-height: calc(100vh - 40px);
-  overflow-y: hidden; /* Hide scroll */
-
+  max-height: calc(100vh - 10px);
+  overflow-y: auto; /* Hide scroll */
+  font-size: 0.5rem;
   padding: 1rem;  /* Reduced padding */
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   color: #fff;
 }
+.glassContainer::-webkit-scrollbar {
+  display: none;
+}
 
+/* For IE, Edge and Firefox */
+.glassContainer {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
 /* Media query for smaller viewport heights */
 @media (max-height: 600px) {
   .glassContainer {
