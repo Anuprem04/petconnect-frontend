@@ -18,7 +18,7 @@ function Card({ image, title, category, description }: CardProps) {
     shadow="md"
     p="xl"
     radius="md"
-    style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '300px' }}
+    style={{ backgroundImage: `url(${image})`, backgroundSize: 'cover', backgroundPosition: 'center', height: '500px' }}
     className={classes.card}
 >
     <div style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)', padding: '20px', borderRadius: '8px', display: 'flex', flexDirection: 'column', justifyContent: 'flex-end', height: '100%' }}>
