@@ -1,0 +1,65 @@
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+.bg {
+  background-image: url('https://images.unsplash.com/photo-1504208434309-cb69f4fe52b0?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
+  min-width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  position: fixed;
+}
+
+.glassContainer {
+  background-color: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 90%;
+  max-width: 360px;
+  max-height: calc(100vh - 10px);
+  overflow-y: auto; /* Hide scroll */
+  font-size: 0.5rem;
+  padding: 1rem;  /* Reduced padding */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  color: #fff;
+}
+.glassContainer::-webkit-scrollbar {
+  display: none;
+}
+
+/* For IE, Edge and Firefox */
+.glassContainer {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+/* Media query for smaller viewport heights */
+@media (max-height: 600px) {
+  .glassContainer {
+    padding: 0.75rem; /* Reduce padding further */
+    font-size: 0.9rem; /* Reduce font size if necessary */
+    max-height: calc(100vh - 20px); /* Increase available space */
+    overflow-y: auto; /* Ensure no scroll */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  .glassContainer::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Optionally adjust for larger screens */
+@media (min-width: 768px) {
+  .glassContainer {
+    max-width: 420px;
+  }
+}
+
+
