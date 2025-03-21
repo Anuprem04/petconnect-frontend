@@ -57,8 +57,21 @@ export function RegisterUser() {
       email: values.email,
       password: values.password,
       petPreferences: values.petPreferences.join(','),
-      phone: parseInt(values.phone), // You may want to convert the phone number properly here
-      address: values.city,
+      phone: (() => {
+        // Extract only digits
+        const numericPhone = values.phone.replace(/\D/g, '');
+  
+        // Remove +91 if it exists at the start
+        const localPhone = numericPhone.startsWith('91') ? numericPhone.slice(2) : numericPhone;
+  
+        // Convert to number and validate
+        const phoneNumber = parseInt(localPhone, 10);
+        if (isNaN(phoneNumber)) {
+          throw new Error('Invalid phone number');
+        }
+        return phoneNumber;
+      })(),
+      city: values.city,
     };
 
     try {
