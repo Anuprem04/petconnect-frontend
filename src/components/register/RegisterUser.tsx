@@ -94,7 +94,7 @@ export function RegisterUser() {
   
       // Redirect to login after 2 seconds (to match autoClose)
       setTimeout(() => {
-        window.location.href = '/login';
+        window.location.href = '/login/user';
       }, 2000);
     } catch (error) {
       console.error('Error during registration:', error);
@@ -192,7 +192,7 @@ export function RegisterUser() {
         </form>
         <Text ta="center" mt="md" style={{ color: '#fff' }}>
   Already have an account?{' '}
-  <a href="/login" style={{ color: '#007bff', fontWeight: 700, cursor: 'pointer' }}>
+  <a href="/login/user" style={{ color: '#007bff', fontWeight: 700, cursor: 'pointer' }}>
     Login
   </a>
 </Text>

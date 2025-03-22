@@ -11,7 +11,7 @@
     align-items: center;
     justify-content: center;
     overflow: hidden;
-    background-image: url('src/assets/birdsShelter.avif');
+    background-image: url('../../assets/birdsShelter.avif');
   }
   
   .form {

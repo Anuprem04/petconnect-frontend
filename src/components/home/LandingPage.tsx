@@ -7,8 +7,8 @@ import classes from './LandingPage.module.css'
 
 
 const mainLinks = [
-  { link: '/login', label: 'Login/Sign Up' },
-  { link: '#', label: 'Shelter Services' }
+  { link: '/login/user', label: 'Login/Sign Up' },
+  { link: '/login/shelter', label: 'Shelter Services' }
 ];
 export function LandingPage() {
  return (<div className={classes.bg}><Header
