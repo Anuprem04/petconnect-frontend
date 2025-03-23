@@ -16,6 +16,7 @@ import { ForgotPassword } from './components/forgotPassword/ForgotPassword';
 import {  ShelterLogin } from './components/login/ShelterLogin';
 import { RegisterShelter } from './components/register/RegisterShelter';
 import { RegisterUser } from './components/register/RegisterUser';
+import { ShelterDashboard } from './components/shelter/ShelterDashboard';
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
         <Route path="/forgot-password" element={<ForgotPassword />}/>
         <Route path="/login/shelter" element={<ShelterLogin />} />
         <Route path="/register/shelter" element={<RegisterShelter />} />
+        <Route path="/shelter/dashboard" element={<ShelterDashboard />} />
       </Routes>
     </Router>
   );

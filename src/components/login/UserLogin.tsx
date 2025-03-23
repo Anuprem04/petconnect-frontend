@@ -69,7 +69,7 @@ export function Login() {
   };
 
   const handleBackToHomeClick = () => {
-    navigate('/');
+    navigate('/home');
   };
 
   return (

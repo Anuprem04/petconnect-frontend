@@ -1,4 +1,4 @@
-import { Button, Group, PasswordInput, TextInput, Title, Text, Input, InputWrapper, Paper } from '@mantine/core';
+import { Button, Group, PasswordInput, TextInput, Title, Text, Input, InputWrapper, Paper, Anchor } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications, showNotification } from '@mantine/notifications';
 import { IMaskInput } from 'react-imask';
@@ -163,9 +163,9 @@ export function RegisterShelter() {
         </form>
         <Text ta="center" mt="md" style={{ color: '#fff' }}>
           Already have an account?{' '}
-          <a href="/login/shelter" style={{ color: '#007bff', fontWeight: 700, cursor: 'pointer' }}>
+          <Anchor href="/login/shelter" style={{ color: '#007bff', fontWeight: 700, cursor: 'pointer' }}>
             Login
-          </a>
+          </Anchor>
         </Text>
       </Paper>
     </div>
