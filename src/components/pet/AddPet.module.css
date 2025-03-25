@@ -1,0 +1,84 @@
+.container {
+    display: flex;
+    min-height: 100vh;
+  }
+  
+  .leftColumn {
+    flex: 1;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .formWrapper {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    padding-top: 6rem;
+    position: relative; /* Important for sticky positioning */
+  }
+  
+  .fixedForm {
+    position: sticky;
+    top: 6rem; /* Sticks below the header */
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
+    background: #6c5a51;
+    border-radius: 8px;
+    z-index: 10;
+    padding: 1.5rem; /* Adjust as needed for internal spacing */
+  }
+  
+  .fixedForm::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera */
+  }
+  
+  .titleWhite {
+    color: white;
+  }
+  
+  .rightColumn {
+    flex: 1;
+    background-image: url('../../assets/shelterReg.avif');
+    background-size: cover;
+    background-position: center;
+  }
+  .fixedForm {
+    position: sticky;
+    top: 6rem;
+    max-width: 500px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    background: #6c5a51;
+    border-radius: 8px;
+    z-index: 10;
+    padding: 1.5rem;
+  }
+  
+  /* Chrome, Safari, Edge */
+  .fixedForm::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .fixedForm::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.1);
+    border-radius: 4px;
+  }
+  
+  .fixedForm::-webkit-scrollbar-thumb {
+    background-color: rgba(255,255,255,0.4);
+    border-radius: 4px;
+  }
+  
+  /* Firefox */
+  .fixedForm {
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.4) rgba(255,255,255,0.1);
+  }

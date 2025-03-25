@@ -1,20 +1,103 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { Button, Paper, PasswordInput, Text, TextInput, Title } from '@mantine/core';
+import { Button, Group, PasswordInput, TextInput, Title, Text, Input, InputWrapper, Paper, Anchor } from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { notifications, showNotification } from '@mantine/notifications';
+import { IMaskInput } from 'react-imask';
 import classes from './RegisterShelter.module.css';
 
 export function RegisterShelter() {
-  const navigate = useNavigate();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [city, setCity] = useState('');
-  const [number, setNumber] = useState('');
+ 
+  const form = useForm({
+    initialValues: {
+      name: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
+      city: '',
+      phone: '',
+    },
+    // Validate fields on blur
+    validateInputOnBlur: true,
+    validate: {
+      name: (value) =>
+        value.trim().length < 2 ? 'Name must be at least 2 characters' : null,
+      email: (value) =>
+        !/^\S+@\S+$/.test(value) ? 'Invalid email' : null,
+      password: (value) => {
+        if (value.length < 6) return 'Password must be at least 6 characters';
+        if (!/[A-Z]/.test(value))
+          return 'Password must contain at least one uppercase letter';
+        if (!/[a-z]/.test(value))
+          return 'Password must contain at least one lowercase letter';
+        if (!/\d/.test(value))
+          return 'Password must contain at least one digit';
+        if (!/[!@#$%^&*(),.?":{}|<>]/.test(value))
+          return 'Password must contain at least one special character';
+        return null;
+      },
+      confirmPassword: (value, values) =>
+        value !== values.password ? 'Passwords do not match' : null,
+      city: (value) =>
+        value.trim().length === 0 ? 'City is required' : null,
+      phone: (value) => {
+        if (!value || value.trim() === '')
+          return 'Phone number is required';
+        return /^\+91 \(\d{5}\) \d{5}$/.test(value)
+          ? null
+          : 'Incomplete phone number';
+      },
+    },
+  });
 
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
-    navigate('/shelter'); // Navigate back to login after successful registration
-  };
+  const handleSubmit = form.onSubmit(async (values) => {
+    // Prepare payload matching backend expected fields (omit confirmPassword)
+    const payload = {
+      name: values.name,
+      email: values.email,
+      password: values.password,
+      city: values.city,
+      phone: (() => {
+        // Extract only digits from the masked phone number
+        const numericPhone = values.phone.replace(/\D/g, '');
+        // Remove country code if it exists
+        const localPhone = numericPhone.startsWith('91') ? numericPhone.slice(2) : numericPhone;
+        const phoneNumber = parseInt(localPhone, 10);
+        if (isNaN(phoneNumber)) {
+          throw new Error('Invalid phone number');
+        }
+        return phoneNumber;
+      })(),
+    };
+
+    try {
+      const response = await fetch('http://localhost:8090/api/petConnect/shelters', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+
+      if (!response.ok) throw new Error('Registration failed');
+      const result = await response.json();
+      const successMsg = "Shelter " + result.name + " registered successfully!";
+      notifications.show({
+        title: 'Success',
+        message: successMsg,
+        color: 'green',
+        position: 'top-left',
+        autoClose: 2000,
+      });
+
+      setTimeout(() => {
+        window.location.href = '/login/shelter';
+      }, 2000);
+    } catch (error) {
+      console.error('Error during registration:', error);
+      showNotification({
+        title: 'Error',
+        message: 'Registration failed. Please try again.',
+        color: 'red',
+      });
+    }
+  });
 
   return (
     <div className={classes.wrapper}>
@@ -24,58 +107,65 @@ export function RegisterShelter() {
         </Title>
 
         <form onSubmit={handleSubmit}>
-          
           <TextInput
             label="Name"
             placeholder="Your full name"
             size="md"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
+            variant="filled"
+            {...form.getInputProps('name')}
           />
           <TextInput
             label="Email"
             placeholder="hello@example.com"
             size="md"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            variant="filled"
+            {...form.getInputProps('email')}
           />
           <PasswordInput
             label="Password"
             placeholder="Your password"
             mt="md"
             size="md"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
+            variant="filled"
+            {...form.getInputProps('password')}
+          />
+          <PasswordInput
+            label="Confirm Password"
+            placeholder="Re-enter your password"
+            mt="md"
+            size="md"
+            variant="filled"
+            {...form.getInputProps('confirmPassword')}
           />
           <TextInput
             label="City"
             placeholder="Your city"
             size="md"
-            value={city}
-            onChange={(e) => setCity(e.target.value)}
+            variant="filled"
+            mt="md"
+            {...form.getInputProps('city')}
           />
-          <TextInput
-            label="Phone"
-            placeholder="Your Contact Number"
-            size="md"
-            value={number}
-            onChange={(e) => setNumber(e.target.value)}
-          />
-          <Button fullWidth mt="xl" size="md" type="submit">
-            Register
-          </Button>
-        </form>
+          <InputWrapper label="Phone" variant="filled" mt="md" error={form.errors.phone}>
+            <Input
+              component={IMaskInput}
+              mask="+91 (00000) 00000"
+              placeholder="Your phone"
+              variant="filled"
+              {...form.getInputProps('phone')}
+            />
+          </InputWrapper>
 
+          <Group justify="center" mt="xl">
+            <Button type="submit" size="md">
+              Register
+            </Button>
+          </Group>
+        </form>
         <Text ta="center" mt="md" style={{ color: '#fff' }}>
           Already have an account?{' '}
-          <Text
-            component="a"
-            href="/shelter"
-            fw={700}
-            style={{ color: '#007bff', cursor: 'pointer' }}
-          >
+          <Anchor href="/login/shelter" style={{ color: '#007bff', fontWeight: 700, cursor: 'pointer' }}>
             Login
-          </Text>
+          </Anchor>
         </Text>
       </Paper>
     </div>

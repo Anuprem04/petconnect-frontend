@@ -1,4 +1,4 @@
-import { Button, Group, Checkbox, PasswordInput, TextInput, Title, Text, Input, InputWrapper } from '@mantine/core';
+import { Button, Group, Checkbox, PasswordInput, TextInput, Title, Text, Input, InputWrapper, Anchor } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { notifications, showNotification } from '@mantine/notifications';
 import classes from './RegisterUser.module.css';
@@ -57,8 +57,21 @@ export function RegisterUser() {
       email: values.email,
       password: values.password,
       petPreferences: values.petPreferences.join(','),
-      phone: parseInt(values.phone), // You may want to convert the phone number properly here
-      address: values.city,
+      phone: (() => {
+        // Extract only digits
+        const numericPhone = values.phone.replace(/\D/g, '');
+  
+        // Remove +91 if it exists at the start
+        const localPhone = numericPhone.startsWith('91') ? numericPhone.slice(2) : numericPhone;
+  
+        // Convert to number and validate
+        const phoneNumber = parseInt(localPhone, 10);
+        if (isNaN(phoneNumber)) {
+          throw new Error('Invalid phone number');
+        }
+        return phoneNumber;
+      })(),
+      city: values.city,
     };
 
     try {
@@ -81,7 +94,7 @@ export function RegisterUser() {
   
       // Redirect to login after 2 seconds (to match autoClose)
       setTimeout(() => {
-        window.location.href = '/login';
+        window.location.href = '/login/user';
       }, 2000);
     } catch (error) {
       console.error('Error during registration:', error);
@@ -179,9 +192,9 @@ export function RegisterUser() {
         </form>
         <Text ta="center" mt="md" style={{ color: '#fff' }}>
   Already have an account?{' '}
-  <a href="/login" style={{ color: '#007bff', fontWeight: 700, cursor: 'pointer' }}>
+  <Anchor href="/login/user" style={{ color: '#007bff', fontWeight: 700, cursor: 'pointer' }}>
     Login
-  </a>
+  </Anchor>
 </Text>
       </div>
     </div>

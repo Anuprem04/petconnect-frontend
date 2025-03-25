@@ -5,18 +5,22 @@ import logo from '../../assets/logo2.png';
 import classes from './Header.module.css';
 import { useNavigate } from 'react-router-dom';
 
+export interface MainLink {
+  link: string;           
+  label: string;         
+  display?: React.ReactNode; 
+}
+
+interface HeaderProps {
+  mainLinks?: MainLink[];
+}
+
 const userLinks = [
   { link: '#', label: 'About Us' },
   { link: '#', label: 'Contact Us' }
 ];
 
-const mainLinks = [
-  { link: '/', label: 'Home' },
-  { link: '/login', label: 'Login/Sign Up' },
-  { link: '/shelter', label: 'Shelter Services' }
-];
-
-export function Header({mainLinks : []}) {
+export function Header({ mainLinks = [] }: HeaderProps) {
   const [opened, { toggle, close }] = useDisclosure(false);
   const [active, setActive] = useState(0);
   const navigate = useNavigate();
@@ -34,7 +38,7 @@ export function Header({mainLinks : []}) {
         close();
       }}
     >
-      {item.label}
+      {item.display ? item.display : item.label}
     </Anchor>
   ));
 
@@ -73,13 +77,7 @@ export function Header({mainLinks : []}) {
               {mainItems}
             </Group>
           </Box>
-          <Burger
-            opened={opened}
-            onClick={toggle}
-            className={classes.burger}
-            size="sm"
-            hiddenFrom="sm"
-          />
+          <Burger opened={opened} onClick={toggle} className={classes.burger} size="sm" hiddenFrom="sm" />
         </Container>
       </header>
 
@@ -92,11 +90,9 @@ export function Header({mainLinks : []}) {
         withCloseButton
       >
         <Stack gap="md">
-          {/* Main menu items vertically */}
           <Stack gap="sm">
             {mainItems}
           </Stack>
-          {/* Secondary links in one horizontal line */}
           <Group gap="sm">
             {secondaryItems}
           </Group>
