@@ -9,6 +9,7 @@ import {
   Loader,
   Center,
   Button,
+  Group,
 } from '@mantine/core';
 import { useMediaQuery } from '@mantine/hooks';
 import classes from '../home/PetCarousel.module.css';
@@ -22,9 +23,15 @@ interface Pet {
   description: string;
   photos: string; // comma-separated URLs
   price: number;
+  shelterId: number;
 }
 
-function PetCard({ pet, image }: { pet: Pet; image: string }) {
+interface Shelter {
+  name: string;
+  phone: string;
+}
+
+function PetCard({ pet, image, shelter }: { pet: Pet; image: string; shelter: Shelter | null }) {
   return (
     <Paper
       shadow="md"
@@ -61,8 +68,16 @@ function PetCard({ pet, image }: { pet: Pet; image: string }) {
         <Text size="lg" mt="md" fw={600} color="yellow">
           ₹{pet.price?.toFixed(2)}
         </Text>
+
+        {shelter && (
+          <Group mt="xs">
+            <Text size="xs" color="white">Shelter: <strong>{shelter.name}</strong></Text>
+            <Text size="xs" color="white">📞 {shelter.phone}</Text>
+          </Group>
+        )}
+
         <Button mt="md" variant="white" color="dark" radius="md" size="xs">
-          View Details
+          Book Now
         </Button>
       </div>
     </Paper>
@@ -71,6 +86,7 @@ function PetCard({ pet, image }: { pet: Pet; image: string }) {
 
 export function DisplayPets() {
   const [pets, setPets] = useState<Pet[]>([]);
+  const [shelters, setShelters] = useState<Record<number, Shelter>>({});
   const [loading, setLoading] = useState(true);
   const autoplay = useRef(Autoplay({ delay: 3000 }));
   const theme = useMantineTheme();
@@ -82,6 +98,20 @@ export function DisplayPets() {
       .then((data) => {
         setPets(data);
         setLoading(false);
+
+        // Fetch shelter details for each unique shelterId
+        const uniqueShelterIds: string[] = Array.from(new Set<string>(data.map((pet: Pet) => pet.shelterId)));
+
+
+        uniqueShelterIds.forEach((id) => {
+            fetch(`http://localhost:8090/api/petConnect/shelters/${id}`)
+              .then((res) => res.json())
+              .then((shelter) => {
+                setShelters((prev) => ({ ...prev, [id]: shelter }));
+              })
+              .catch((err) => console.error(`Failed to fetch shelter ${id}`, err));
+          });
+          
       })
       .catch((err) => {
         console.error('Failed to fetch pets:', err);
@@ -98,30 +128,28 @@ export function DisplayPets() {
   }
   const BASE_IMAGE_URL = 'http://localhost:8090/images/';
 
-  console.log(pets)
   const slides = pets.flatMap((pet) => {
     const photoUrls = pet.photos
-    ?.split(',')
-    .map((filename) => `${BASE_IMAGE_URL}${filename.trim()}`);
+      ?.split(',')
+      .map((filename) => `${BASE_IMAGE_URL}${filename.trim()}`);
     return photoUrls.map((image, index) => (
       <Carousel.Slide key={`${pet.petId}-${index}`}>
-        <PetCard pet={pet} image={image} />
+        <PetCard pet={pet} image={image} shelter={shelters[pet.shelterId] || null} />
       </Carousel.Slide>
     ));
   });
 
   return (
-<Carousel
-  slideSize={pets.length === 1 ? '50%' : { base: '100%', sm: '50%' }}
-  slideGap={{ base: 2, sm: 'xl' }}
-  align={pets.length === 1 ? 'center' : 'start'}
-  slidesToScroll={mobile ? 1 : 2}
-  plugins={[autoplay.current]}
-  onMouseEnter={autoplay.current.stop}
-  onMouseLeave={autoplay.current.reset}
->
-  {slides}
-</Carousel>
-
+    <Carousel
+      slideSize={pets.length === 1 ? '50%' : { base: '100%', sm: '50%' }}
+      slideGap={{ base: 2, sm: 'xl' }}
+      align={pets.length === 1 ? 'center' : 'start'}
+      slidesToScroll={mobile ? 1 : 2}
+      plugins={[autoplay.current]}
+      onMouseEnter={autoplay.current.stop}
+      onMouseLeave={autoplay.current.reset}
+    >
+      {slides}
+    </Carousel>
   );
 }
