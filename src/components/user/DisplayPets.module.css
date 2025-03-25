@@ -1,0 +1,25 @@
+.price {
+    color: var(--mantine-color-black);
+  }
+  
+  /* Since CSS doesn't support mixins or nesting like SCSS, 
+     we need to write out the full selector for hover */
+  .carousel:hover .carouselControls {
+    opacity: 1;
+  }
+  
+  .carouselControls {
+    transition: opacity 150ms ease;
+    opacity: 0;
+  }
+  
+  .carouselIndicator {
+    width: 4px;
+    height: 4px;
+    transition: width 250ms ease;
+  }
+  
+  .carouselIndicator[data-active] {
+    width: 16px;
+  }
+  
