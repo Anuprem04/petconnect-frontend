@@ -19,6 +19,7 @@ import { RegisterUser } from './components/register/RegisterUser';
 import { ShelterDashboard } from './components/shelter/ShelterDashboard';
 import { AddPet } from './components/pet/AddPet';
 import { UserDashBoard } from './components/user/UserDashBoard';
+import { PetDetails } from './components/user/PetDetails';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
         <Route path="/shelter/dashboard" element={<ShelterDashboard />} />
         <Route path="/dashboard" element={<UserDashBoard />} />
         <Route path="/add/pet" element={<AddPet />} />
+        <Route path="/pet/:petId" element={<PetDetails />} />
       </Routes>
     </Router>
   );
