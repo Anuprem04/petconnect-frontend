@@ -1,15 +1,16 @@
 import { Link, Navigate } from 'react-router-dom';
 import { Footer } from '../footer/Footer';
 import { Header, MainLink } from '../header/Header';
-
-import classes from './UserDashBoard.module.css';
 import { useAuth } from '../security/useAuth';
-import { AdoptionRequestTable } from './AdoptionStatusCard';
+import { AdoptionRequestTable } from './AdoptionRequestTable';
+import classes from './AdoptionStatus.module.css';
 
 export function AdoptionStatus() {
   const auth = useAuth();
-  if (!auth) return <Navigate to="/login/user" replace />;
-  if (auth.role !== 'USER') return <Navigate to="/login/user" replace />;
+
+  if (!auth || auth.role !== 'USER') {
+    return <Navigate to="/login/user" replace />;
+  }
 
   const mainLinks: MainLink[] = [
     { link: '/home', label: 'Home' },
@@ -26,12 +27,12 @@ export function AdoptionStatus() {
   }));
 
   return (
-    <div className={classes.bg}>
+    <div className={classes.container}>
       <Header mainLinks={transformedMainLinks} />
-       <AdoptionRequestTable ></AdoptionRequestTable>
-      <Footer style={{marginTop : '8%'}} />
+      <div className={classes.content}>
+        <AdoptionRequestTable />
+      </div>
+      <Footer />
     </div>
   );
 }
-
-
