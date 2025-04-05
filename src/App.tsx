@@ -19,9 +19,13 @@ import { RegisterUser } from './components/register/RegisterUser';
 import { ShelterDashboard } from './components/shelter/ShelterDashboard';
 import { AddPet } from './components/pet/AddPet';
 import { PetDetails } from './components/user/PetDetails';
-import { PetsDashBoard } from './components/user/PetsDashboard';
 import { UserDashBoard } from './components/user/UserDashBoard';
 import { AdoptionStatus } from './components/user/AdoptionStatus';
+import { PetsDashBoard } from './components/user/PetsDashBoard';
+import { ViewProfile } from './components/view/ViewProfile';
+import { ContactUs } from './components/contact/ContactUs';
+import AboutUs from './components/about/AboutUs';
+
 
 function App() {
   return (
@@ -39,6 +43,9 @@ function App() {
         <Route path="/pet/:petId" element={<PetDetails />} />
         <Route path="/user/dashboard" element={<UserDashBoard />} />
         <Route path="/user/adoptions" element={<AdoptionStatus />} />
+        <Route path="/view/profile" element={<ViewProfile />} />
+        <Route path="/contact/contactus" element={<ContactUs />} />
+        <Route path="/about/aboutUs" element={<AboutUs />} />
       </Routes>
     </Router>
   );
