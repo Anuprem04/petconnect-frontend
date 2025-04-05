@@ -15,7 +15,7 @@ import {
   BackgroundImage,
   Anchor,
 } from '@mantine/core';
-import { IconPaw, IconHeart, IconUsersGroup } from '@tabler/icons-react';
+import { IconPaw, IconHeart } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 
 const AboutUs: React.FC = () => {
