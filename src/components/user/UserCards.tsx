@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { Container, Grid, Card, Center, ActionIcon, Text } from '@mantine/core';
-import { IconEye, IconShoppingCart, IconMessageCircle, IconCheckupList } from '@tabler/icons-react';
+import { IconEye, IconMessageCircle, IconCheckupList } from '@tabler/icons-react';
 
 export function UserCards() {
   const navigate = useNavigate();
@@ -11,7 +11,7 @@ export function UserCards() {
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     aspectRatio: '1 / 1', // Keep square
-    maxWidth: 960,         // Reduce card width
+    maxWidth: 1920,         // Reduce card width
     borderRadius: 'var(--mantine-radius-md)',
     overflow: 'hidden',
     margin: 'auto',
@@ -36,7 +36,7 @@ export function UserCards() {
 
   return (
     <Container fluid my="xl" pt="xl" p={0}>
-      <Grid gutter="md" justify="center">
+      <Grid gutter="xl" justify="center">
         {[
           {
             label: 'View Pets',
@@ -51,19 +51,13 @@ export function UserCards() {
             path: '/user/adoptions',
           },
           {
-            label: 'Accessory Store',
-            icon: <IconShoppingCart size={24} />,
-            image: 'https://images.unsplash.com/photo-1585837575652-267c041d77d4',
-            path: '/store/accessories',
-          },
-          {
             label: 'Post a Query',
             icon: <IconMessageCircle size={24} />,
-            image: 'https://images.unsplash.com/photo-1710322916725-9489fbbc1a0b',
+            image: 'https://images.unsplash.com/photo-1572152666560-5e7746e843eb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
             path: '/post/query',
           },
         ].map((card, index) => (
-          <Grid.Col key={index} span={{ base: 6, sm: 3 }}>
+          <Grid.Col key={index} span={{ base: 12, sm: 6, md: 4 }}>
             <Card shadow="sm" radius="md" style={cardStyle(card.image)}>
               <div style={overlayStyle} />
               <Center style={contentStyle}>
