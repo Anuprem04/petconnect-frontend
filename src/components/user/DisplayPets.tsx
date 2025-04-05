@@ -13,6 +13,7 @@ export interface Pet {
   photos: string;
   price: number;
   shelterId: number;
+  adoptionStatus: string | null;
 }
 
 export interface Shelter {

@@ -21,11 +21,17 @@ import { AddPet } from './components/pet/AddPet';
 import { PetDetails } from './components/user/PetDetails';
 import { UserDashBoard } from './components/user/UserDashBoard';
 import { AdoptionStatus } from './components/user/AdoptionStatus';
+<<<<<<< HEAD
 import { PetsDashBoard } from './components/user/PetsDashBoard';
 import { ViewProfile } from './components/view/ViewProfile';
 import { ContactUs } from './components/contact/ContactUs';
 import AboutUs from './components/about/AboutUs';
 
+=======
+import { ManagePetsTable } from './components/shelter/ManagePets';
+import { PetsDashBoard } from './components/user/PetsDashBoard';
+import { ShelterPetCard } from './components/shelter/ShelterPetCard';
+>>>>>>> 123ae177dc3eb7cb2c0a58d210bf2b09ea6d6a28
 
 function App() {
   return (
@@ -41,11 +47,16 @@ function App() {
         <Route path="/pets" element={<PetsDashBoard />} />
         <Route path="/add/pet" element={<AddPet />} />
         <Route path="/pet/:petId" element={<PetDetails />} />
+        <Route path="/shelter/pets/card/:petId" element={<ShelterPetCard />} />
         <Route path="/user/dashboard" element={<UserDashBoard />} />
         <Route path="/user/adoptions" element={<AdoptionStatus />} />
+<<<<<<< HEAD
         <Route path="/view/profile" element={<ViewProfile />} />
         <Route path="/contact/contactus" element={<ContactUs />} />
         <Route path="/about/aboutUs" element={<AboutUs />} />
+=======
+        <Route path="/manage/pets" element={<ManagePetsTable />} />
+>>>>>>> 123ae177dc3eb7cb2c0a58d210bf2b09ea6d6a28
       </Routes>
     </Router>
   );
