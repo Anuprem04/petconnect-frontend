@@ -18,6 +18,16 @@ import { RegisterShelter } from './components/register/RegisterShelter';
 import { RegisterUser } from './components/register/RegisterUser';
 import { ShelterDashboard } from './components/shelter/ShelterDashboard';
 import { AddPet } from './components/pet/AddPet';
+import { PetDetails } from './components/user/PetDetails';
+import { UserDashBoard } from './components/user/UserDashBoard';
+import { AdoptionStatus } from './components/user/AdoptionStatus';
+import { ViewProfile } from './components/view/ViewProfile';
+import { ContactUs } from './components/contact/ContactUs';
+import AboutUs from './components/about/AboutUs';
+import { ManagePetsTable } from './components/shelter/ManagePets';
+import { PetsDashBoard } from './components/user/PetsDashBoard';
+import { ShelterPetCard } from './components/shelter/ShelterPetCard';
+
 
 function App() {
   return (
@@ -30,7 +40,16 @@ function App() {
         <Route path="/login/shelter" element={<ShelterLogin />} />
         <Route path="/register/shelter" element={<RegisterShelter />} />
         <Route path="/shelter/dashboard" element={<ShelterDashboard />} />
+        <Route path="/pets" element={<PetsDashBoard />} />
         <Route path="/add/pet" element={<AddPet />} />
+        <Route path="/pet/:petId" element={<PetDetails />} />
+        <Route path="/shelter/pets/card/:petId" element={<ShelterPetCard />} />
+        <Route path="/user/dashboard" element={<UserDashBoard />} />
+        <Route path="/user/adoptions" element={<AdoptionStatus />} />
+        <Route path="/view/profile" element={<ViewProfile />} />
+        <Route path="/contact/contactus" element={<ContactUs />} />
+        <Route path="/about/aboutus" element={<AboutUs />} />
+        <Route path="/manage/pets" element={<ManagePetsTable />} />
       </Routes>
     </Router>
   );

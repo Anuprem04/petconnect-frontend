@@ -10,8 +10,9 @@ import { useAuth } from '../security/useAuth';
 
 
 const mainLinks: MainLink[] = [
-  { link: '/home', label: 'Home' },
-  { link: '/view/profile', label: 'View Profile' }
+  { link: '/home', label: 'PetConnect Home' },
+  { link: '/shelter/dashboard', label: 'Shelter Home' },
+  { link: '/view/profile', label: 'View Profile' },
 ];
 
 const transformedMainLinks: MainLink[] = mainLinks.map((item) => ({

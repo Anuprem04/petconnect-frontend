@@ -1,0 +1,38 @@
+.filterBar {
+    background-color: var(--mantine-color-black-filled);
+    color: var(--mantine-color-white);
+    padding: var(--mantine-spacing-md);
+    border-radius: var(--mantine-radius-md);
+    width: 300px;
+  
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    max-width: 100%;
+    overflow: visible; /* ✅ Allow tooltips to overflow */
+    position: relative; /* ✅ Enables z-index to work */
+    z-index: 2;
+  }
+  
+  .filterBarHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--mantine-spacing-md);
+    padding-bottom: var(--mantine-spacing-md);
+  }
+  
+  .filterBarContent {
+    overflow: visible; /* ✅ Important to show tooltips */
+  }
+  
+  .rangeSliderWrapper {
+    width: 100%;
+    overflow: visible; /* ✅ Allow tooltip to escape */
+  }
+  
+  .filterBarFooter {
+    margin-top: var(--mantine-spacing-md);
+    padding-top: var(--mantine-spacing-md);
+  }
+  

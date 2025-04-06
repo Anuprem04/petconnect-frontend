@@ -16,8 +16,8 @@ interface HeaderProps {
 }
 
 const userLinks = [
-  { link: '#', label: 'About Us' },
-  { link: '#', label: 'Contact Us' }
+  { link: '/about/aboutus', label: 'About Us' },
+  { link: '/contact/contactus', label: 'Contact Us' }
 ];
 
 export function Header({ mainLinks = [] }: HeaderProps) {
@@ -44,9 +44,11 @@ export function Header({ mainLinks = [] }: HeaderProps) {
 
   const secondaryItems = userLinks.map((item) => (
     <Anchor
-      href={item.link}
-      key={item.label}
-      onClick={(event: any) => event.preventDefault()}
+    onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault();
+      navigate(item.link);
+      close(); // Close drawer if on mobile
+    }}
       className={classes.secondaryLink}
     >
       {item.label}

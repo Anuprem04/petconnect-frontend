@@ -1,0 +1,48 @@
+
+  .price {
+    color: black;
+  }
+  
+  @media (prefers-color-scheme: dark) {
+    .price {
+      color: white;
+    }
+  }
+  
+  .carousel:hover .carouselControls {
+    opacity: 1;
+  }
+  
+  .carouselControls {
+    transition: opacity 150ms ease;
+    opacity: 0;
+  }
+  
+  .carouselIndicator {
+    width: 4px;
+    height: 4px;
+    transition: width 250ms ease;
+  }
+  
+  .carouselIndicator[data-active] {
+    width: 16px;
+  }
+  .innerControls {
+    top: 45%;         /* vertically center */
+    padding: 0 6px;    /* reduce spacing */
+    gap: 4px;          /* tighter buttons */
+  }
+  
+  .innerIndicator {
+    width: 4px;
+    height: 4px;
+    transition: width 250ms ease;
+  }
+  
+  .innerIndicator[data-active] {
+    width: 16px;
+  }
+  .outerControls {
+    left: 20px !important;
+    right: 20px !important;
+  }
