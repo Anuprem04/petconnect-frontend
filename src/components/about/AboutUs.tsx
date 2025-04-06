@@ -30,11 +30,24 @@ const AboutUs: React.FC = () => {
       style={{
         backgroundSize: 'cover',
         backgroundPosition: 'center',
+        position: 'relative', 
         minHeight: '100vh', // <-- this makes it full screen height
         display: 'flex',
         alignItems: 'center'
       }}
     >
+    <div
+  style={{
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: '100%',
+    width: '100%',
+    backgroundColor: 'rgba(0, 0, 0, 0.4)',
+    zIndex: 0,
+    pointerEvents: 'none', // 🔥 This is the key!
+  }}
+/>
       <Container size="lg" py="xl">
         <Center mb="xl">
           <Title order={1} c="yellow.4">
@@ -42,7 +55,7 @@ const AboutUs: React.FC = () => {
           </Title>
         </Center>
 
-        <Text ta="center" c="black" size="lg" mb="xl">
+        <Text ta="center" c="yellow" size="lg" mb="xl">
           At PetConnect+, we're not just creating an app—we're building a community where love and loyalty meet technology. 🐶🐱
         </Text>
 
@@ -92,7 +105,7 @@ const AboutUs: React.FC = () => {
                 alt="Happy pets"
                 style={{ maxHeight: rem(350) }}
               />
-              <Text ta="center" c="black">
+              <Text ta="center" c="white">
                 Because every pet deserves a happy tail. 🐾
               </Text>
             </Stack>
