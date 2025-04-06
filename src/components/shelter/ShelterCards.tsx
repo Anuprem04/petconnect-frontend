@@ -65,7 +65,7 @@ export function ShelterCards() {
       label: 'View Inquiries',
       icon: <IconEye size={24} />,
       image: inquiry,
-      path: '/view/inquiries',
+      path: '/shelter/viewinquiry',
     },
   ];
 

@@ -33,6 +33,7 @@ import BlogPage from './components/blog/Blog';
 import StorePage from './components/store/Store';
 import CareerPage from './components/career/Career';
 import PostQueryPage from './components/user/PostQueryPage';
+import ViewInquiriesPage from './components/shelter/ViewInquiryPage';
 
 
 function App() {
@@ -62,6 +63,7 @@ function App() {
         <Route path="/store/store" element={<StorePage />} />
         <Route path="/career/career" element={<CareerPage />} />
         <Route path="/user/post" element={<PostQueryPage />} />
+        <Route path="/shelter/viewinquiry" element={<ViewInquiriesPage />} />
 
       </Routes>
     </Router>
