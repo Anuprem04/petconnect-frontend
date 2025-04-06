@@ -17,9 +17,34 @@ import {
   useMantineTheme,
 } from '@mantine/core';
 import { IconSend, IconCheck } from '@tabler/icons-react';
-import { useNavigate } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { Footer } from '../footer/Footer';
+import { MainLink, Header } from '../header/Header';
+import { ViewProfileModal } from '../view/ViewProfile';
+const mainLinks: MainLink[] = [
+  { link: '/home', label: 'PetConnect Home' },
+  { link: '/shelter/dashboard', label: 'Shelter Home' },
+  { link: '/view/profile', label: 'View Profile' },
+];
+const transformedMainLinks: MainLink[] = mainLinks.map((item) => ({
+  ...item,
+  display:
+    item.link === '/view/profile' ? (
+      item.label
+    ) : (
+      <Link
+        to={item.link}
+        style={{
+          textDecoration: 'none',
+          color: 'inherit',
+        }}
+      >
+        {item.label}
+      </Link>
+    ),
+}));
 const PostQueryPage = () => {
+  const [profileModalOpened, setProfileModalOpened] = useState(false);
   const navigate = useNavigate();
   const theme = useMantineTheme();
   const [submitted, setSubmitted] = useState(false);
@@ -99,13 +124,19 @@ const PostQueryPage = () => {
   };
 
   return (
+    <>
+         <Header
+            mainLinks={transformedMainLinks}
+            onProfileClick={() => setProfileModalOpened(true)}
+          />
     <Box
       style={{
-        minHeight: '100vh',
+        minHeight: '200vh',
         backgroundImage: `url('https://images.unsplash.com/photo-1607808915002-7019e6d07f82?q=80&w=2012&auto=format&fit=crop&ixlib=rb-4.0.3')`,
-        backgroundSize: 'cover',
+        backgroundSize: 'fill',
         backgroundPosition: 'center',
         position: 'relative',
+        paddingTop: '10%'
       }}
     >
       {/* Overlay */}
@@ -116,8 +147,8 @@ const PostQueryPage = () => {
           left: 0,
           right: 0,
           bottom: 0,
-          backdropFilter: 'blur(6px)',
-          backgroundColor: 'rgba(255, 255, 255, 0.4)',
+          backdropFilter: 'blur(10px)',
+          backgroundColor: 'rgba(255, 255, 255, 0.43)',
           zIndex: 0,
         }}
       />
@@ -242,6 +273,12 @@ const PostQueryPage = () => {
         </Text>
       </Container>
     </Box>
+     <Footer style={{ marginTop: '0%' }}/>
+          <ViewProfileModal 
+                opened={profileModalOpened} 
+                onClose={() => setProfileModalOpened(false)}
+              />
+    </>
   );
 };
 

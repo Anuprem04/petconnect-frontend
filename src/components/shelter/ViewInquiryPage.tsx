@@ -10,7 +10,16 @@ import {
   ScrollArea,
   Anchor,
 } from '@mantine/core';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { Footer } from '../footer/Footer';
+import { MainLink, Header } from '../header/Header';
+import { ViewProfileModal } from '../view/ViewProfile';
+
+const mainLinks: MainLink[] = [
+  { link: '/home', label: 'PetConnect Home' },
+  { link: '/shelter/dashboard', label: 'Shelter Home' },
+  { link: '/view/profile', label: 'View Profile' },
+];
 
 interface Inquiry {
   id: number;
@@ -20,8 +29,26 @@ interface Inquiry {
   message: string;
   createdAt: string;
 }
+const transformedMainLinks: MainLink[] = mainLinks.map((item) => ({
+  ...item,
+  display:
+    item.link === '/view/profile' ? (
+      item.label
+    ) : (
+      <Link
+        to={item.link}
+        style={{
+          textDecoration: 'none',
+          color: 'inherit',
+        }}
+      >
+        {item.label}
+      </Link>
+    ),
+}));
 
 const ViewInquiriesPage = () => {
+  const [profileModalOpened, setProfileModalOpened] = useState(false);
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -57,7 +84,12 @@ const ViewInquiriesPage = () => {
   ));
 
   return (
-    <div style={{ position: 'relative', minHeight: '100vh' }}>
+    <>
+       <Header 
+            mainLinks={transformedMainLinks}  
+            onProfileClick={() => setProfileModalOpened(true)}
+          />
+    <div style={{ position: 'relative', minHeight: '100vh' ,paddingTop: '10%'}}>
       {/* Blurred background */}
       <div
         style={{
@@ -123,6 +155,12 @@ const ViewInquiriesPage = () => {
         </Text>
       </Container>
     </div>
+    <Footer style={{ marginTop: '0%' }}/>
+      <ViewProfileModal 
+            opened={profileModalOpened} 
+            onClose={() => setProfileModalOpened(false)}
+          />
+    </>
   );
 };
 
