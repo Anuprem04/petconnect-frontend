@@ -43,7 +43,7 @@ export function Login() {
         color: 'green',
         autoClose: 2000,
       });
-      navigate('/dashboard'); // Navigate to the user dashboard
+      navigate('/user/dashboard'); // Navigate to the user dashboard
     } catch (error: any) {
       console.error('Login error:', error);
       setErrorMessage(error.message || 'Login failed');
