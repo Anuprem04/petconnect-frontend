@@ -12,8 +12,8 @@ interface FooterProps {
 const links = [
   { link: '/privacy/policy', label: 'Privacy' },
   { link: '/blog/blog', label: 'Blog' },
-  { link: '/store', label: 'Store' },
-  { link: '/careers', label: 'Careers' },
+  { link: '/store/store', label: 'Store' },
+  { link: '/career/career', label: 'Careers' },
 ];
 
 export function Footer({ style, className }: FooterProps) {

@@ -30,6 +30,8 @@ import { ShelterPetCard } from './components/shelter/ShelterPetCard';
 
 import PrivacyPolicy from './components/privacy/PrivacyPolicy';
 import BlogPage from './components/blog/Blog';
+import StorePage from './components/store/Store';
+import CareerPage from './components/career/Career';
 
 
 function App() {
@@ -56,6 +58,8 @@ function App() {
 
         <Route path="/privacy/policy" element={<PrivacyPolicy />} />
         <Route path="/blog/blog" element={<BlogPage />} />
+        <Route path="/store/store" element={<StorePage />} />
+        <Route path="/career/career" element={<CareerPage />} />
 
       </Routes>
     </Router>
