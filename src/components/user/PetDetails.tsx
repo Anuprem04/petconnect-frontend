@@ -30,6 +30,7 @@ import { IMaskInput } from 'react-imask';
 import { useForm } from '@mantine/form';
 import { showNotification } from '@mantine/notifications';
 import { useAuth } from '../security/useAuth';
+import { ViewProfileModal } from '../view/ViewProfile';
 
 interface Pet {
   petId: number;
@@ -50,20 +51,27 @@ interface Shelter {
 }
 
 const mainLinks: MainLink[] = [
-  { link: '/home', label: 'Home' },
+  { link: '/home', label: 'PetConnect Home' },
+  { link: '/user/dashboard', label: 'User Home' },
   { link: '/view/profile', label: 'View Profile' },
 ];
 
 const transformedMainLinks: MainLink[] = mainLinks.map((item) => ({
   ...item,
-  display: (
-    <Link
-      to={item.link}
-      style={{ textDecoration: 'none', color: 'inherit' }}
-    >
-      {item.label}
-    </Link>
-  ),
+  display:
+    item.link === '/view/profile' ? (
+      item.label
+    ) : (
+      <Link
+        to={item.link}
+        style={{
+          textDecoration: 'none',
+          color: 'inherit',
+        }}
+      >
+        {item.label}
+      </Link>
+    ),
 }));
 
 export function PetDetails() {
@@ -86,6 +94,7 @@ export function PetDetails() {
           phone: (value) => (value.trim().length < 10 ? 'Invalid phone number' : null),
         },
       });
+  const [profileModalOpened, setProfileModalOpened] = useState(false);
   const { petId } = useParams<{ petId: string }>();
   const [pet, setPet] = useState<Pet | null>(null);
   const [shelter, setShelter] = useState<Shelter | null>(null);
@@ -188,7 +197,10 @@ const handleSubmit = async () => {
 
   return (
     <>
-      <Header mainLinks={transformedMainLinks} />
+     <Header
+        mainLinks={transformedMainLinks}
+        onProfileClick={() => setProfileModalOpened(true)}
+      />
       {/* <Box style={{ maxWidth: 1000, marginLeft: '2%',marginRight: '2%',marginBottom:'auto', padding: '1rem', marginTop: '10%' }}> */}
       <Container size="xl" style={{ marginTop: '8%', marginBottom: '2%', marginRight:'5%',marginLeft:'5%'}}>
       <SimpleGrid cols={{ base: 1, md: 3 }} spacing="xl" verticalSpacing="xl">
@@ -343,6 +355,10 @@ const handleSubmit = async () => {
 </Container>
       {/* </Box> */}
       <Footer />
+      <ViewProfileModal
+              opened={profileModalOpened}
+              onClose={() => setProfileModalOpened(false)}
+            />
     </>
   );
 }

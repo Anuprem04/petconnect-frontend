@@ -21,12 +21,11 @@ import { AddPet } from './components/pet/AddPet';
 import { PetDetails } from './components/user/PetDetails';
 import { UserDashBoard } from './components/user/UserDashBoard';
 import { AdoptionStatus } from './components/user/AdoptionStatus';
-import { ViewProfile } from './components/view/ViewProfile';
 import { ContactUs } from './components/contact/ContactUs';
 import AboutUs from './components/about/AboutUs';
 import { ManagePetsTable } from './components/shelter/ManagePets';
 import { PetsDashBoard } from './components/user/PetsDashBoard';
-import { ShelterPetCard } from './components/shelter/ShelterPetCard';
+import { ManageAdoptionsTable } from './components/shelter/ManageAdoptions';
 
 import PrivacyPolicy from './components/privacy/PrivacyPolicy';
 import BlogPage from './components/blog/Blog';
@@ -50,21 +49,18 @@ function App() {
         <Route path="/pets" element={<PetsDashBoard />} />
         <Route path="/add/pet" element={<AddPet />} />
         <Route path="/pet/:petId" element={<PetDetails />} />
-        <Route path="/shelter/pets/card/:petId" element={<ShelterPetCard />} />
         <Route path="/user/dashboard" element={<UserDashBoard />} />
         <Route path="/user/adoptions" element={<AdoptionStatus />} />
-        <Route path="/view/profile" element={<ViewProfile />} />
         <Route path="/contact/contactus" element={<ContactUs />} />
         <Route path="/about/aboutus" element={<AboutUs />} />
         <Route path="/manage/pets" element={<ManagePetsTable />} />
-
         <Route path="/privacy/policy" element={<PrivacyPolicy />} />
         <Route path="/blog/blog" element={<BlogPage />} />
         <Route path="/store/store" element={<StorePage />} />
         <Route path="/career/career" element={<CareerPage />} />
         <Route path="/user/post" element={<PostQueryPage />} />
         <Route path="/shelter/viewinquiry" element={<ViewInquiriesPage />} />
-
+        <Route path="/manage/adoptions" element={<ManageAdoptionsTable />} />
       </Routes>
     </Router>
   );

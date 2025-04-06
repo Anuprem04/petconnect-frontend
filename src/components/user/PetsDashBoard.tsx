@@ -7,13 +7,16 @@ import { DisplayPets, Pet, Shelter } from './DisplayPets';
 import { FilterBar } from './FilterBar';
 import { Box, Container, Grid, Loader } from '@mantine/core';
 import styles from './PetsDashboard.module.css';
+import { ViewProfileModal } from '../view/ViewProfile';
 
 const mainLinks: MainLink[] = [
-  { link: '/home', label: 'Home' },
+  { link: '/home', label: 'PetConnect Home' },
+  { link: '/user/dashboard', label: 'User Home' },
   { link: '/view/profile', label: 'View Profile' },
 ];
 
 export function PetsDashBoard() {
+  const [profileModalOpened, setProfileModalOpened] = useState(false);
   const auth = useAuth();
   if (!auth) return <Navigate to="/login/user" replace />;
   if (auth.role !== 'USER') return <Navigate to="/login/user" replace />;
@@ -36,7 +39,7 @@ export function PetsDashBoard() {
       .then((data) => {
         setPets(data);
         setLoading(false);
-        const uniqueShelterIds : string[] = Array.from(new Set(data.map((pet: { shelterId: any; }) => pet.shelterId)));
+        const uniqueShelterIds: string[] = Array.from(new Set(data.map((pet: { shelterId: any; }) => pet.shelterId)));
         uniqueShelterIds.forEach((id) => {
           fetch(`http://localhost:8090/api/petConnect/shelters/${id}`)
             .then((res) => res.json())
@@ -55,22 +58,32 @@ export function PetsDashBoard() {
   const uniqueAnimalTypes = Array.from(new Set(pets.map((p) => p.animalType)));
   const uniqueBreeds = Array.from(new Set(pets.map((p) => p.breed)));
 
+
   const transformedMainLinks: MainLink[] = mainLinks.map((item) => ({
     ...item,
-    display: (
-      <Link
-        to={item.link}
-        style={{ textDecoration: 'none', color: 'inherit' }}
-      >
-        {item.label}
-      </Link>
-    ),
+    display:
+      item.link === '/view/profile' ? (
+        item.label
+      ) : (
+        <Link
+          to={item.link}
+          style={{
+            textDecoration: 'none',
+            color: 'inherit',
+          }}
+        >
+          {item.label}
+        </Link>
+      ),
   }));
 
   return (
     <div className={styles.root}>
-      <Header mainLinks={transformedMainLinks} />
-  
+      <Header
+        mainLinks={transformedMainLinks}
+        onProfileClick={() => setProfileModalOpened(true)}
+      />
+
       <Container size="xl" className={styles.container}>
         <Grid gutter="lg" align="flex-start">
           <Grid.Col span={{ base: 12, md: 3 }} className={styles.sidebar}>
@@ -81,7 +94,7 @@ export function PetsDashBoard() {
               uniqueBreeds={uniqueBreeds}
             />
           </Grid.Col>
-  
+
           <Grid.Col span={{ base: 12, md: 9 }} style={{ minHeight: '400px' }}>
             <div className={styles.main}>
               {loading ? (
@@ -100,8 +113,12 @@ export function PetsDashBoard() {
           </Grid.Col>
         </Grid>
       </Container>
-  
+
       <Footer />
+      <ViewProfileModal
+        opened={profileModalOpened}
+        onClose={() => setProfileModalOpened(false)}
+      />
     </div>
   );
 }  
