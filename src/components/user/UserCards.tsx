@@ -54,7 +54,7 @@ export function UserCards() {
             label: 'Post a Query',
             icon: <IconMessageCircle size={24} />,
             image: 'https://images.unsplash.com/photo-1572152666560-5e7746e843eb?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-            path: '/post/query',
+            path: '/user/post',
           },
         ].map((card, index) => (
           <Grid.Col key={index} span={{ base: 12, sm: 6, md: 4 }}>

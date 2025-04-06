@@ -32,6 +32,7 @@ import PrivacyPolicy from './components/privacy/PrivacyPolicy';
 import BlogPage from './components/blog/Blog';
 import StorePage from './components/store/Store';
 import CareerPage from './components/career/Career';
+import PostQueryPage from './components/user/PostQueryPage';
 
 
 function App() {
@@ -60,6 +61,7 @@ function App() {
         <Route path="/blog/blog" element={<BlogPage />} />
         <Route path="/store/store" element={<StorePage />} />
         <Route path="/career/career" element={<CareerPage />} />
+        <Route path="/user/post" element={<PostQueryPage />} />
 
       </Routes>
     </Router>
