@@ -11,8 +11,10 @@ import {
   Group,
   Stack,
   Center,
+  Anchor,
 } from '@mantine/core';
 import { IconBriefcase, IconArrowRight } from '@tabler/icons-react';
+import { useNavigate } from 'react-router-dom';
 
 const jobOpenings = [
   {
@@ -55,6 +57,10 @@ const JobCard = ({ title, type, location, description }: (typeof jobOpenings)[0]
 );
 
 const CareerPage = () => {
+    const navigate = useNavigate();
+    const handleBackToHomeClick = () => {
+        navigate('/home');
+      };
   return (
     <Box>
       {/* Hero Section */}
@@ -141,6 +147,11 @@ const CareerPage = () => {
           <Button color="teal" size="md" leftSection={<IconBriefcase size={16} />}>
             Send Resume
           </Button>
+          <Text ta="center" mt="lg" style={{ color: '#0d0f12' }}>
+                                                <Anchor href="/home" onClick={handleBackToHomeClick} fw={700} style={{ color: 'black', fontSize: '1rem' }}>
+                                                  Back to Home
+                                                </Anchor>
+                                              </Text>
         </Container>
       </Box>
     </Box>
