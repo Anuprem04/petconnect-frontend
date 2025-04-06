@@ -27,11 +27,9 @@ import AboutUs from './components/about/AboutUs';
 import { ManagePetsTable } from './components/shelter/ManagePets';
 import { PetsDashBoard } from './components/user/PetsDashBoard';
 import { ShelterPetCard } from './components/shelter/ShelterPetCard';
-<<<<<<< HEAD
+
 import PrivacyPolicy from './components/privacy/PrivacyPolicy';
 import BlogPage from './components/blog/Blog';
-=======
->>>>>>> 35a97f8ba84040caf7d97d10425d8f2c2877882b
 
 
 function App() {
@@ -55,11 +53,10 @@ function App() {
         <Route path="/contact/contactus" element={<ContactUs />} />
         <Route path="/about/aboutus" element={<AboutUs />} />
         <Route path="/manage/pets" element={<ManagePetsTable />} />
-<<<<<<< HEAD
+
         <Route path="/privacy/policy" element={<PrivacyPolicy />} />
         <Route path="/blog/blog" element={<BlogPage />} />
-=======
->>>>>>> 35a97f8ba84040caf7d97d10425d8f2c2877882b
+
       </Routes>
     </Router>
   );
