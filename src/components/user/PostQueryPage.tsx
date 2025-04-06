@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   Title,
@@ -12,68 +12,120 @@ import {
   Center,
   Group,
   Divider,
-  useMantineTheme,
   Anchor,
+  Select,
+  useMantineTheme,
 } from '@mantine/core';
-import { IconSend, IconCheck, IconMail, IconUser } from '@tabler/icons-react';
+import { IconSend, IconCheck } from '@tabler/icons-react';
 import { useNavigate } from 'react-router-dom';
 
 const PostQueryPage = () => {
-    const navigate = useNavigate();
-    const handleBackToHomeClick = () => {
-        navigate('/home');
-      };
+  const navigate = useNavigate();
+  const theme = useMantineTheme();
+  const [submitted, setSubmitted] = useState(false);
+
+  // Form state includes shelter selection; note that we use shelterId
   const [form, setForm] = useState({
     name: '',
     email: '',
     subject: '',
     message: '',
+    shelterId: '',
   });
-  const [submitted, setSubmitted] = useState(false);
-  const theme = useMantineTheme();
+
+  // State to hold list of shelters for the Select component
+  const [shelters, setShelters] = useState<{ value: string; label: string }[]>([]);
+
+  // Fetch shelters on component mount
+  useEffect(() => {
+    const fetchShelters = async () => {
+      try {
+        const res = await fetch('http://localhost:8090/api/petConnect/shelters', {
+          headers: {
+            // Include authorization headers if required
+          },
+        });
+        if (!res.ok) {
+          throw new Error('Failed to fetch shelters');
+        }
+        const data = await res.json();
+        console.log('Fetched shelters:', data);
+        // Transform data for Mantine Select:
+        // Use shelter.name because your API returns "name"
+        const transformed = data.map((shelter: any) => ({
+          value: shelter.shelterId ? shelter.shelterId.toString() : '',
+          label: shelter.name || 'Unknown Shelter',
+        }));
+        setShelters(transformed);
+      } catch (err) {
+        console.error(err);
+      }
+    };
+    fetchShelters();
+  }, []);
+
+  const handleBackToHomeClick = () => {
+    navigate('/home');
+  };
 
   const handleChange = (field: string, value: string) => {
     setForm((prev) => ({ ...prev, [field]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Submitted:', form);
-    setSubmitted(true);
-    setForm({ name: '', email: '', subject: '', message: '' });
-
-    setTimeout(() => setSubmitted(false), 3000);
+    const payload = { ...form };
+    try {
+      const res = await fetch('http://localhost:8090/api/petConnect/queries', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: JSON.stringify(payload),
+      });
+      
+      if (!res.ok) {
+        throw new Error('Failed to send query');
+      }
+      console.log('Submitted:', payload);
+      setSubmitted(true);
+      // Reset the form; note we reset shelterId (same case as initial state)
+      setForm({ name: '', email: '', subject: '', message: '', shelterId: '' });
+      setTimeout(() => setSubmitted(false), 3000);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
     <Box
-  style={{
-    minHeight: '100vh',
-    backgroundImage: `url('https://images.unsplash.com/photo-1607808915002-7019e6d07f82?q=80&w=2012&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)`,
-    backgroundSize: 'cover',
-    backgroundPosition: 'center',
-    position: 'relative',
-  }}
->
-  {/* Overlay for blur */}
-  <Box
-    style={{
-      position: 'absolute',
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-      backdropFilter: 'blur(6px)',
-      backgroundColor: 'rgba(255, 255, 255, 0.4)',
-      zIndex: 0,
-    }}
-  />
+      style={{
+        minHeight: '100vh',
+        backgroundImage: `url('https://images.unsplash.com/photo-1607808915002-7019e6d07f82?q=80&w=2012&auto=format&fit=crop&ixlib=rb-4.0.3')`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        position: 'relative',
+      }}
+    >
+      {/* Overlay */}
+      <Box
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: 0,
+          backdropFilter: 'blur(6px)',
+          backgroundColor: 'rgba(255, 255, 255, 0.4)',
+          zIndex: 0,
+        }}
+      />
 
-  {/* Foreground content */}
-  <Container size="sm" style={{ position: 'relative', zIndex: 1 }}>
-        {/* Hero Header */}
-        <Center mb="xl" style={{ flexDirection: 'column'}}>
-          <Title order={2} c="yellow" fw={700} >
+      {/* Foreground content */}
+      <Container size="sm" style={{ position: 'relative', zIndex: 1 }}>
+        <Center mb="xl" style={{ flexDirection: 'column' }}>
+          <Title order={2} c="yellow" fw={700}>
             Post Your Query
           </Title>
           <Text c="black" size="md" mt="xs" ta="center">
@@ -81,7 +133,6 @@ const PostQueryPage = () => {
           </Text>
         </Center>
 
-        {/* Card-like Form Section */}
         <Box
           p="xl"
           style={{
@@ -90,7 +141,7 @@ const PostQueryPage = () => {
           }}
         >
           <form onSubmit={handleSubmit}>
-            <Stack justify="lg">
+            <Stack gap="md">
               <TextInput
                 label="Full Name"
                 placeholder="John Doe"
@@ -98,13 +149,9 @@ const PostQueryPage = () => {
                 value={form.name}
                 onChange={(e) => handleChange('name', e.currentTarget.value)}
                 styles={{
-                    input: {
-                      color: 'yellow', // input text color
-                    },
-                    label: {
-                      color: 'black', // optional: label text color
-                    },
-                  }}
+                  input: { color: 'yellow' },
+                  label: { color: 'black' },
+                }}
               />
               <TextInput
                 label="Email Address"
@@ -114,13 +161,21 @@ const PostQueryPage = () => {
                 value={form.email}
                 onChange={(e) => handleChange('email', e.currentTarget.value)}
                 styles={{
-                    input: {
-                      color: 'yellow', // input text color
-                    },
-                    label: {
-                      color: 'black', // optional: label text color
-                    },
-                  }}
+                  input: { color: 'yellow' },
+                  label: { color: 'black' },
+                }}
+              />
+              <Select
+                label="Select Shelter Home"
+                placeholder="Choose a shelter"
+                required
+                data={shelters}
+                value={form.shelterId}
+                onChange={(value) => handleChange('shelterId', value || '')}
+                styles={{
+                  input: { color: 'yellow' },
+                  label: { color: 'black' },
+                }}
               />
               <TextInput
                 label="Subject"
@@ -129,13 +184,9 @@ const PostQueryPage = () => {
                 value={form.subject}
                 onChange={(e) => handleChange('subject', e.currentTarget.value)}
                 styles={{
-                    input: {
-                      color: 'yellow', // input text color
-                    },
-                    label: {
-                      color: 'black', // optional: label text color
-                    },
-                  }}
+                  input: { color: 'yellow' },
+                  label: { color: 'black' },
+                }}
               />
               <Textarea
                 label="Your Message"
@@ -146,13 +197,9 @@ const PostQueryPage = () => {
                 value={form.message}
                 onChange={(e) => handleChange('message', e.currentTarget.value)}
                 styles={{
-                    input: {
-                      color: 'yellow', // input text color
-                    },
-                    label: {
-                      color: 'black', // optional: label text color
-                    },
-                  }}
+                  input: { color: 'yellow' },
+                  label: { color: 'black' },
+                }}
               />
 
               <Divider my="sm" />
@@ -184,10 +231,15 @@ const PostQueryPage = () => {
           )}
         </Box>
         <Text ta="center" mt="lg" style={{ color: '#0d0f12' }}>
-                                              <Anchor href="/home" onClick={handleBackToHomeClick} fw={700} style={{ color: 'black', fontSize: '1rem' }}>
-                                                Back to Home
-                                              </Anchor>
-                                            </Text>
+          <Anchor
+            href="/home"
+            onClick={handleBackToHomeClick}
+            fw={700}
+            style={{ color: 'black', fontSize: '1rem' }}
+          >
+            Back to Home
+          </Anchor>
+        </Text>
       </Container>
     </Box>
   );

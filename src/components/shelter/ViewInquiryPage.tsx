@@ -8,7 +8,6 @@ import {
   Center,
   Paper,
   ScrollArea,
-  Badge,
   Anchor,
 } from '@mantine/core';
 import { useNavigate } from 'react-router-dom';
@@ -26,12 +25,17 @@ const ViewInquiriesPage = () => {
   const [inquiries, setInquiries] = useState<Inquiry[]>([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
   const handleBackToHomeClick = () => {
-      navigate('/home');
-    };
+    navigate('/home');
+  };
 
   useEffect(() => {
-    fetch('/api/inquiries')
+    fetch('http://localhost:8090/api/petConnect/queries', {
+      headers: {
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
+    })
       .then((res) => res.json())
       .then((data) => {
         setInquiries(data);
@@ -44,17 +48,12 @@ const ViewInquiriesPage = () => {
   }, []);
 
   const rows = inquiries.map((inquiry) => (
-    <tr key={inquiry.id}>
-      <td>{inquiry.name}</td>
-      <td>{inquiry.email}</td>
-      <td>{inquiry.subject}</td>
-      <td>{inquiry.message}</td>
-      <td>
-        <Badge color="blue" variant="light">
-          {new Date(inquiry.createdAt).toLocaleString()}
-        </Badge>
-      </td>
-    </tr>
+    <Table.Tr key={inquiry.id}>
+      <Table.Td>{inquiry.name}</Table.Td>
+      <Table.Td>{inquiry.email}</Table.Td>
+      <Table.Td>{inquiry.subject}</Table.Td>
+      <Table.Td>{inquiry.message}</Table.Td>
+    </Table.Tr>
   ));
 
   return (
@@ -94,29 +93,34 @@ const ViewInquiriesPage = () => {
             shadow="md"
             radius="md"
             p="lg"
-            style={{ backgroundColor: 'rgba(255, 255, 255, 0.85)' }}
+          //  style={{ backgroundColor: 'rgba(255, 255, 255, 0.85)' }}
           >
             <ScrollArea>
               <Table striped highlightOnHover withTableBorder withColumnBorders>
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Email</th>
-                    <th>Subject</th>
-                    <th>Message</th>
-                    <th>Date</th>
-                  </tr>
-                </thead>
-                <tbody>{rows}</tbody>
+                <Table.Thead>
+                  <Table.Tr>
+                    <Table.Th>Name</Table.Th>
+                    <Table.Th>Email</Table.Th>
+                    <Table.Th>Subject</Table.Th>
+                    <Table.Th>Message</Table.Th>
+                  </Table.Tr>
+                </Table.Thead>
+                <Table.Tbody>{rows}</Table.Tbody>
               </Table>
             </ScrollArea>
           </Paper>
         )}
+
         <Text ta="center" mt="lg" style={{ color: '#0d0f12' }}>
-                                              <Anchor href="/home" onClick={handleBackToHomeClick} fw={700} style={{ color: 'black', fontSize: '1rem' }}>
-                                                Back to Home
-                                              </Anchor>
-                                            </Text>
+          <Anchor
+            href="/shelter/dashboard"
+            onClick={handleBackToHomeClick}
+            fw={700}
+            style={{ color: 'black', fontSize: '1rem' }}
+          >
+            Back to Home
+          </Anchor>
+        </Text>
       </Container>
     </div>
   );
