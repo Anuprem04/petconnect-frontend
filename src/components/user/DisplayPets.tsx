@@ -47,17 +47,28 @@ export function DisplayPets({ pets, shelters, loading, filters }: DisplayPetsPro
     );
   }
 
-  // Filter the pets based on provided filters
   const filteredPets = pets.filter((pet) => {
-    const matchesType = filters.animalType ? pet.animalType === filters.animalType : true;
-    const matchesGender = filters.gender
-      ? pet.gender.toLowerCase() === filters.gender.toLowerCase()
-      : true;
-    const matchesBreed = filters.breed.length ? filters.breed.includes(pet.breed) : true;
+    const matchesType = filters.animalType === '' || pet.animalType === filters.animalType;
+    const matchesGender = filters.gender === '' || pet.gender.toLowerCase() === filters.gender.toLowerCase();
+    const matchesBreed = filters.breed.length === 0 || filters.breed.map((b) => b.toLowerCase()).includes(pet.breed.toLowerCase());
     const matchesAge = pet.age >= filters.ageRange[0] && pet.age <= filters.ageRange[1];
     const matchesPrice = pet.price >= filters.priceRange[0] && pet.price <= filters.priceRange[1];
-    return matchesType && matchesGender && matchesBreed && matchesAge && matchesPrice;
+  
+    const result = matchesType && matchesGender && matchesBreed && matchesAge && matchesPrice;
+    if (!result) {
+      console.log('Filtered out pet:', {
+        pet,
+        matchesType,
+        matchesGender,
+        matchesBreed,
+        matchesAge,
+        matchesPrice
+      });
+    }
+    console.log("result",result);
+    return result;
   });
+ 
 
   // Pagination logic
   const itemsPerPage = mobile ? 2 : 6;

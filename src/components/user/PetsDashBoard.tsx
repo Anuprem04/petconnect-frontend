@@ -19,19 +19,20 @@ export function PetsDashBoard() {
   const [profileModalOpened, setProfileModalOpened] = useState(false);
   const auth = useAuth();
   if (!auth) return <Navigate to="/login/user" replace />;
-  if (auth.role !== 'USER') return <Navigate to="/login/user" replace />;
+ 
 
   const [pets, setPets] = useState<Pet[]>([]);
   const [shelters, setShelters] = useState<Record<number, Shelter>>({});
   const [loading, setLoading] = useState(true);
-
+console.log(pets)
   const [filters, setFilters] = useState({
     animalType: '',
     gender: '',
     breed: [] as string[],
-    ageRange: [0, 120] as [number, number],
-    priceRange: [0, 1000] as [number, number],
+    ageRange: [0, 200] as [number, number],      // full range
+    priceRange: [0, 50000] as [number, number], // a very large upper limit to avoid hiding pets
   });
+
 
   useEffect(() => {
     fetch('http://localhost:8090/api/petConnect/pets/all')
@@ -76,7 +77,7 @@ export function PetsDashBoard() {
         </Link>
       ),
   }));
-
+console.log(pets.length)
   return (
     <div className={styles.root}>
       <Header
@@ -85,17 +86,20 @@ export function PetsDashBoard() {
       />
 
       <Container size="xl" className={styles.container}>
-        <Grid gutter="lg" align="flex-start">
-          <Grid.Col span={{ base: 12, md: 3 }} className={styles.sidebar}>
+        {/* Show filter button only if pets are available */}
+        {pets.length > 0 && (
+          <Box mb="md" style={{ textAlign: 'right' }}>
             <FilterBar
               filters={filters}
               setFilters={setFilters}
               uniqueAnimalTypes={uniqueAnimalTypes}
               uniqueBreeds={uniqueBreeds}
             />
-          </Grid.Col>
+          </Box>
+        )}
 
-          <Grid.Col span={{ base: 12, md: 9 }} style={{ minHeight: '400px' }}>
+        <Grid gutter="lg" align="flex-start">
+          <Grid.Col span={12} style={{ minHeight: '400px' }}>
             <div className={styles.main}>
               {loading ? (
                 <Box className={styles.loaderContainer}>
@@ -113,6 +117,7 @@ export function PetsDashBoard() {
           </Grid.Col>
         </Grid>
       </Container>
+
 
       <Footer />
       <ViewProfileModal

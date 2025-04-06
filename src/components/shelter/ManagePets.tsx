@@ -253,7 +253,7 @@ export function ManagePetsTable() {
                         opened={profileModalOpened} 
                         onClose={() => setProfileModalOpened(false)}
                       />
-                      <Footer />
+           
             </div>
 
             {/* Modal placed outside layout DOM */}
