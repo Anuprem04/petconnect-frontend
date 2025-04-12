@@ -17,8 +17,8 @@ interface HeaderProps {
 }
 
 const userLinks = [
-  { link: '#', label: 'About Us' },
-  { link: '#', label: 'Contact Us' }
+  { link: '/about/aboutus', label: 'About Us' },
+  { link: '/contact/contactus', label: 'Contact Us' }
 ];
 
 export function Header({ mainLinks = [], onProfileClick }: HeaderProps) {
@@ -54,8 +54,10 @@ export function Header({ mainLinks = [], onProfileClick }: HeaderProps) {
     <Anchor
       href={item.link}
       key={item.label}
-      onClick={(event: any) => event.preventDefault()}
-      className={classes.secondaryLink}
+      onClick={(event: any) => {
+        event.preventDefault();
+        navigate(item.link); // Ensure navigation for secondary links
+      }}
     >
       {item.label}
     </Anchor>

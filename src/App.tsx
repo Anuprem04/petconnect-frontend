@@ -33,6 +33,8 @@ import StorePage from './components/store/Store';
 import CareerPage from './components/career/Career';
 import PostQueryPage from './components/user/PostQueryPage';
 import ViewInquiriesPage from './components/shelter/ViewInquiryPage';
+import CourierService from './components/courier/CourierServce';
+import Tracker from './components/track/TrackCourier';
 
 
 function App() {
@@ -61,6 +63,8 @@ function App() {
         <Route path="/user/post" element={<PostQueryPage />} />
         <Route path="/shelter/viewinquiry" element={<ViewInquiriesPage />} />
         <Route path="/manage/adoptions" element={<ManageAdoptionsTable />} />
+        <Route path="/courier/courier" element={<CourierService />} />
+        <Route path="/track/track" element={<Tracker />} />
       </Routes>
     </Router>
   );
