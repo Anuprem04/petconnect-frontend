@@ -52,12 +52,12 @@ export function Header({ mainLinks = [], onProfileClick }: HeaderProps) {
 
   const secondaryItems = userLinks.map((item) => (
     <Anchor
-      href={item.link}
-      key={item.label}
-      onClick={(event: any) => {
-        event.preventDefault();
-        navigate(item.link); // Ensure navigation for secondary links
-      }}
+    onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault();
+      navigate(item.link);
+      close(); // Close drawer if on mobile
+    }}
+      className={classes.secondaryLink}
     >
       {item.label}
     </Anchor>
