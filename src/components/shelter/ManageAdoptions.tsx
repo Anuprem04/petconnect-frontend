@@ -15,6 +15,7 @@ import {
     ScrollArea,
     Button,
     Group,
+    MantineTheme,
 } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import { IconClipboardCheck } from '@tabler/icons-react';
@@ -33,21 +34,15 @@ const mainLinks: MainLink[] = [
 ];
 
 const transformedMainLinks: MainLink[] = mainLinks.map((item) => ({
-  ...item,
-  display:
-    item.link === '/view/profile' ? (
-      item.label
-    ) : (
-      <Link
-        to={item.link}
-        style={{
-          textDecoration: 'none',
-          color: 'inherit',
-        }}
-      >
-        {item.label}
-      </Link>
-    ),
+    ...item,
+    display:
+        item.link === '/view/profile' ? (
+            item.label
+        ) : (
+            <Link to={item.link} style={{ textDecoration: 'none', color: 'inherit' }}>
+                {item.label}
+            </Link>
+        ),
 }));
 
 export function ManageAdoptionsTable() {
@@ -60,16 +55,15 @@ export function ManageAdoptionsTable() {
         reason: string;
         name: string;
         phone: number;
-        pet?: {
-            breed: string;
-        };
-        user?: {
-            name: string;
-            phone?: string;
-        };
+        paymentSuccessful?: boolean;
+        deliveryRequested?: boolean;
+        pet?: { breed: string };
+        user?: { name: string; phone?: string };
     }
 
     const auth = useAuth();
+
+
     const [profileModalOpened, setProfileModalOpened] = useState(false);
     const [adoptions, setAdoptions] = useState<Adoption[]>([]);
     const [loading, setLoading] = useState(true);
@@ -154,7 +148,6 @@ export function ManageAdoptionsTable() {
 
     const handleRevoke = async (adoptionId: number) => {
         try {
-            // Revoking resets the status to PENDING regardless of current decision.
             const res = await fetch(`http://localhost:8090/api/petConnect/adoptions/${adoptionId}`, {
                 method: 'PUT',
                 headers: {
@@ -186,7 +179,6 @@ export function ManageAdoptionsTable() {
         );
     }
 
-    // Minimal table: Adoption ID, Pet ID, and Status
     const tableContent = (
         <Table striped highlightOnHover miw={1000} style={{ width: '100%' }}>
             <Table.Thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
@@ -194,6 +186,7 @@ export function ManageAdoptionsTable() {
                     <Table.Th>Adoption ID</Table.Th>
                     <Table.Th>Pet ID</Table.Th>
                     <Table.Th>Status</Table.Th>
+                    <Table.Th>Payment Status</Table.Th>
                     <Table.Th>Action</Table.Th>
                 </Table.Tr>
             </Table.Thead>
@@ -217,6 +210,17 @@ export function ManageAdoptionsTable() {
                             >
                                 {ad.approvalStatus}
                             </Badge>
+                        </Table.Td>
+                        <Table.Td>
+                            {ad.paymentSuccessful ? (
+                                <Badge color="green" variant="light">
+                                    Paid
+                                </Badge>
+                            ) : (
+                                <Badge color="gray" variant="light">
+                                    Pending
+                                </Badge>
+                            )}
                         </Table.Td>
                         <Table.Td>
                             <Tooltip label="View Details & Approval" withArrow>
@@ -247,7 +251,9 @@ export function ManageAdoptionsTable() {
             <Box maw={1100} mx="auto" style={{ flex: 1 }}>
                 <Paper withBorder shadow="sm" p="lg" radius="md" mx="auto" maw={1100}>
                     <Title order={3} mb="md" ta="center" c="yellow">
-                        {adoptions.length === 1 ? 'You have 1 adoption' : `You have ${adoptions.length} adoptions`}
+                        {adoptions.length === 1
+                            ? 'You have 1 adoption'
+                            : `You have ${adoptions.length} adoptions`}
                     </Title>
                     {adoptions.length > 4 ? (
                         <ScrollArea h={400} onScrollPositionChange={({ y }) => setScrolled(y !== 0)}>
@@ -256,7 +262,40 @@ export function ManageAdoptionsTable() {
                     ) : (
                         tableContent
                     )}
+
+                    {/* Courier section moved below */}
+
+
                 </Paper>
+                {adoptions.some((ad) => ad.approvalStatus === 'APPROVED' && ad.paymentSuccessful) && (
+                    <Box
+                        mt="xl"
+                        p="md"
+                        sx={(theme: MantineTheme) => ({
+                            backgroundColor: theme.colors.gray[0],
+                            borderRadius: theme.radius.md,
+                            textAlign: 'center',
+                        })}
+                    >
+                        <Text size="xl" weight={500}>
+                            Ready for Courier?
+                        </Text>
+                        <Text size="md" color="dimmed" mt="xs">
+                            You have approved adoptions with successful payment. Proceed to courier request to deliver the pets to their new home.
+                        </Text>
+                        <Group justify="flext-start" mt="md">
+                            <Button
+                                component={Link}
+                                to="/shelter/courier"
+                                color="blue"
+                                variant="light"
+                            >
+                                Request Courier
+                            </Button>
+                        </Group>
+                    </Box>
+                )}
+
             </Box>
             <Footer />
             <ViewProfileModal
@@ -268,7 +307,6 @@ export function ManageAdoptionsTable() {
                 onClose={() => {
                     setModalOpen(false);
                     setShowPetDetails(false);
-
                 }}
                 title={<Center><Title order={3} c="yellow">Adoption Details</Title></Center>}
                 centered
@@ -278,27 +316,13 @@ export function ManageAdoptionsTable() {
             >
                 {selectedAdoption && (
                     <Box>
-                        <Text>
-                            <strong>Adoption ID:</strong> {selectedAdoption.adoptionId}
-                        </Text>
-                        <Text>
-                            <strong>Pet ID:</strong> {selectedAdoption.petId} {selectedAdoption.pet?.breed ? `- ${selectedAdoption.pet.breed}` : ''}
-                        </Text>
-                        <Text>
-                            <strong>Application Date:</strong> {selectedAdoption.applicationDate}
-                        </Text>
-                        <Text>
-                            <strong>User Name:</strong> {selectedAdoption.name}
-                        </Text>
-                        <Text>
-                            <strong>User Phone:</strong> {selectedAdoption.phone}
-                        </Text>
-                        <Text>
-                            <strong>Reason for Adoption:</strong> {selectedAdoption.reason}
-                        </Text>
-                        <Text>
-                            <strong>Status:</strong> {selectedAdoption.approvalStatus}
-                        </Text>
+                        <Text><strong>Adoption ID:</strong> {selectedAdoption.adoptionId}</Text>
+                        <Text><strong>Pet ID:</strong> {selectedAdoption.petId} {selectedAdoption.pet?.breed ? `- ${selectedAdoption.pet.breed}` : ''}</Text>
+                        <Text><strong>Application Date:</strong> {selectedAdoption.applicationDate}</Text>
+                        <Text><strong>User Name:</strong> {selectedAdoption.name}</Text>
+                        <Text><strong>User Phone:</strong> {selectedAdoption.phone}</Text>
+                        <Text><strong>Reason for Adoption:</strong> {selectedAdoption.reason}</Text>
+                        <Text><strong>Status:</strong> {selectedAdoption.approvalStatus}</Text>
 
                         {selectedAdoption.approvalStatus === 'PENDING' && (
                             <Group mt="md" justify="center">

@@ -53,7 +53,7 @@ export function ShelterDashboard() {
         opened={profileModalOpened} 
         onClose={() => setProfileModalOpened(false)}
       />
-      <Footer />
+       <Footer style={{ marginTop: '8%' }} />
     </div>
   );
 }

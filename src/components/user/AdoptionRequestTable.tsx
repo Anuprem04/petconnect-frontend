@@ -12,18 +12,23 @@ import {
   Paper,
   Button,
   MantineTheme,
+  Tooltip,
+  TextInput,
+  Modal,
+  Group,
 } from '@mantine/core';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../security/useAuth';
 import classes from './AdoptionRequestTable.module.css';
+import Tracker from '../track/TrackCourier';
 
 interface AdoptionRequest {
+  paymentSuccessful: any;
   adoptionId: number;
   petId: number;
   applicationDate: string;
   approvalStatus: string;
   reason: string;
-  // These fields will be populated after fetching pet and shelter details
   animalType?: string;
   breed?: string;
   shelterName?: string;
@@ -34,6 +39,19 @@ export function AdoptionRequestTable() {
   const [adoptions, setAdoptions] = useState<AdoptionRequest[]>([]);
   const [loading, setLoading] = useState(true);
   const [scrolled, setScrolled] = useState(false);
+
+  const [modalOpened, setModalOpened] = useState(false);
+  const [trackingIdInput, setTrackingIdInput] = useState('');
+  const [showTracker, setShowTracker] = useState(false);
+
+  const handleTrackSubmit = (event: React.FormEvent) => {
+    event.preventDefault();
+    if (trackingIdInput) {
+      setShowTracker(true);
+      setModalOpened(false);
+    }
+  };
+
 
   useEffect(() => {
     const fetchAdoptions = async () => {
@@ -49,16 +67,13 @@ export function AdoptionRequestTable() {
         if (!res.ok) throw new Error('Failed to fetch adoptions');
         const rawAdoptions: AdoptionRequest[] = await res.json();
 
-        // For each adoption request, fetch pet details and then shelter details.
         const adoptionsWithDetails = await Promise.all(
           rawAdoptions.map(async (req) => {
-            // Fetch pet details for this adoption
             const petRes = await fetch(
               `http://localhost:8090/api/petConnect/pets/public/${req.petId}`
             );
             const petData = await petRes.json();
 
-            // Fetch shelter details using petData.shelterId
             const shelterRes = await fetch(
               `http://localhost:8090/api/petConnect/shelters/${petData.shelterId}`
             );
@@ -106,6 +121,7 @@ export function AdoptionRequestTable() {
           <Table.Th>Reason</Table.Th>
           <Table.Th>Requested On</Table.Th>
           <Table.Th>Status</Table.Th>
+          <Table.Th>Payment</Table.Th>
         </Table.Tr>
       </Table.Thead>
       <Table.Tbody>
@@ -125,18 +141,44 @@ export function AdoptionRequestTable() {
               })}
             </Table.Td>
             <Table.Td>
-              <Badge
+              <Badge 
+              fullWidth
                 color={
                   req.approvalStatus === 'PENDING'
                     ? 'yellow'
                     : req.approvalStatus === 'APPROVED'
-                    ? 'green'
-                    : 'red'
+                      ? 'green'
+                      : 'red'
                 }
                 variant="light"
               >
                 {req.approvalStatus}
               </Badge>
+            </Table.Td>
+            <Table.Td style={{ whiteSpace: 'nowrap' }}>
+              {req.paymentSuccessful ? (
+                <Badge fullWidth color="green" variant="light" ta='center'>
+                  Payment Successful
+                </Badge>
+              ) : req.approvalStatus === 'APPROVED' ? (
+                <Button
+                  component={Link}
+                  to={`/payment/${req.adoptionId}`}
+                  variant="outline"
+                  color="blue"
+                  size="xs"
+                >
+                  Pay Now
+                </Button>
+              ) : (
+                <Tooltip label="Approval pending" withArrow>
+                  <div>
+                    <Button variant="filled" color="gray" size="xs" disabled>
+                      Pay Now
+                    </Button>
+                  </div>
+                </Tooltip>
+              )}
             </Table.Td>
           </Table.Tr>
         ))}
@@ -145,7 +187,7 @@ export function AdoptionRequestTable() {
   );
 
   return (
-    <Box maw={1100} mx="auto" mt="xl">
+    <Box maw={1500} mx="auto" mt="xl">
       {adoptions.length === 0 ? (
         <Center mt="md">
           <Text size="lg" c="dimmed">
@@ -168,6 +210,7 @@ export function AdoptionRequestTable() {
           )}
         </Paper>
       )}
+
       {adoptions.length > 0 && adoptions.length < 3 && (
         <Box
           mt="xl"
@@ -189,6 +232,64 @@ export function AdoptionRequestTable() {
           </Button>
         </Box>
       )}
+
+      {/* ✅ Track Courier Section */}
+      <Box
+        mt="xl"
+        p="md"
+        sx={(theme: MantineTheme) => ({
+          backgroundColor: theme.colors.gray[0],
+          borderRadius: theme.radius.md,
+          textAlign: 'center',
+        })}
+      >
+        <Text size="xl" weight={500}>
+          Already adopted a pet . Track it over here?
+        </Text>
+        <Text size="md" color="dimmed" mt="xs">
+          Enter your tracking ID below to track your courier.
+        </Text>
+        <Button mt="md" color="violet" onClick={() => setModalOpened(true)}>
+          Track Courier
+        </Button>
+      </Box>
+
+      {/* ✅ Modal for tracking input */}
+      <Modal
+        opened={modalOpened}
+        onClose={() => setModalOpened(false)}
+        title="Enter Tracking ID"
+        size="sm"
+        zIndex={2000}
+      >
+        <form onSubmit={handleTrackSubmit}>
+          <Box mb="md">
+            <TextInput
+              label="Tracking ID"
+              placeholder="Enter Tracking ID"
+              value={trackingIdInput}
+              onChange={(e) => setTrackingIdInput(e.currentTarget.value)}
+              required
+            />
+          </Box>
+          <Group justify="center" mt="md">
+            <Button type="submit" color="orange">
+              Track Courier
+            </Button>
+          </Group>
+        </form>
+      </Modal>
+
+      <Modal
+        opened={showTracker}
+        onClose={() => setShowTracker(false)}
+        size="xl"
+        fullScreen
+        zIndex={3000}
+      >
+        <Tracker trackingId={trackingIdInput}  compact/>
+      </Modal>
+
     </Box>
   );
 }

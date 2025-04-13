@@ -70,7 +70,7 @@ export function ShelterCards() {
   ];
 
   return (
-    <Container fluid my="xl"  p={'3rem 0 0 0'}>
+    <Container fluid my="xl"  p={'5rem 0 0 0'}>
       <Grid gutter="xl" justify="center">
         {cards.map((card, index) => (
           // Changed md span from 4 to 3 so that 4 cards fit evenly in one row on medium screens

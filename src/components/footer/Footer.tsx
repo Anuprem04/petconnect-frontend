@@ -13,8 +13,7 @@ const links = [
   { link: '/privacy/policy', label: 'Privacy' },
   { link: '/blog/blog', label: 'Blog' },
   { link: '/store/store', label: 'Store' },
-  { link: '/career/career', label: 'Careers' },
-  { link: '/courier/courier', label: 'Courier Service' }
+  { link: '/career/career', label: 'Careers' }
 ];
 
 export function Footer({ style, className }: FooterProps) {
