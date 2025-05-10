@@ -6,21 +6,22 @@ import classes from './Header.module.css';
 import { useNavigate } from 'react-router-dom';
 
 export interface MainLink {
-  link: string;           
-  label: string;         
-  display?: React.ReactNode; 
+  link: string;
+  label: string;
+  display?: React.ReactNode;
 }
 
 interface HeaderProps {
   mainLinks?: MainLink[];
+  onProfileClick?: () => void; // New prop to trigger profile modal
 }
 
 const userLinks = [
-  { link: '#', label: 'About Us' },
-  { link: '#', label: 'Contact Us' }
+  { link: '/about/aboutus', label: 'About Us' },
+  { link: '/contact/contactus', label: 'Contact Us' }
 ];
 
-export function Header({ mainLinks = [] }: HeaderProps) {
+export function Header({ mainLinks = [], onProfileClick }: HeaderProps) {
   const [opened, { toggle, close }] = useDisclosure(false);
   const [active, setActive] = useState(0);
   const navigate = useNavigate();
@@ -34,7 +35,14 @@ export function Header({ mainLinks = [] }: HeaderProps) {
       onClick={(event: any) => {
         event.preventDefault();
         setActive(index);
-        navigate(item.link);
+        // Trigger profile modal if link is /view/profile and callback exists
+        if (item.link === '/view/profile' && onProfileClick) {
+          onProfileClick();
+        } else {
+          console.log(item.link)
+          console.log(onProfileClick)
+          navigate(item.link);
+        }
         close();
       }}
     >
@@ -44,9 +52,11 @@ export function Header({ mainLinks = [] }: HeaderProps) {
 
   const secondaryItems = userLinks.map((item) => (
     <Anchor
-      href={item.link}
-      key={item.label}
-      onClick={(event: any) => event.preventDefault()}
+    onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
+      event.preventDefault();
+      navigate(item.link);
+      close(); // Close drawer if on mobile
+    }}
       className={classes.secondaryLink}
     >
       {item.label}
@@ -90,12 +100,8 @@ export function Header({ mainLinks = [] }: HeaderProps) {
         withCloseButton
       >
         <Stack gap="md">
-          <Stack gap="sm">
-            {mainItems}
-          </Stack>
-          <Group gap="sm">
-            {secondaryItems}
-          </Group>
+          <Stack gap="sm">{mainItems}</Stack>
+          <Group gap="sm">{secondaryItems}</Group>
         </Stack>
       </Drawer>
     </>

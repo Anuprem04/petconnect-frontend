@@ -1,0 +1,16 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    padding-top: 9%;
+   
+  }
+  
+  .content {
+    flex: 1; /* this will push footer to the bottom */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* or center if you want vertical centering */
+    padding: 1rem;
+  }
+  

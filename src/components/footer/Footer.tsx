@@ -1,6 +1,7 @@
 import React from 'react';
 import { IconBrandInstagram, IconBrandTwitter, IconBrandYoutube } from '@tabler/icons-react';
 import { ActionIcon, Anchor, Group } from '@mantine/core';
+import { useNavigate } from 'react-router-dom';
 import classes from './Footer.module.css';
 
 interface FooterProps {
@@ -9,22 +10,27 @@ interface FooterProps {
 }
 
 const links = [
-  { link: '#', label: 'Contact' },
-  { link: '#', label: 'Privacy' },
-  { link: '#', label: 'Blog' },
-  { link: '#', label: 'Store' },
-  { link: '#', label: 'Careers' },
+  { link: '/privacy/policy', label: 'Privacy' },
+  { link: '/blog/blog', label: 'Blog' },
+  { link: '/store/store', label: 'Store' },
+  { link: '/career/career', label: 'Careers' }
 ];
 
 export function Footer({ style, className }: FooterProps) {
+  const navigate = useNavigate();
+
   const items = links.map((link) => (
     <Anchor
       c="dimmed"
       key={link.label}
       href={link.link}
       lh={1}
-      onClick={(event: any) => event.preventDefault()}
+      onClick={(event: React.MouseEvent<HTMLAnchorElement>) => {
+        event.preventDefault();
+        navigate(link.link);
+      }}
       size="sm"
+      style={{ cursor: 'pointer' }}
     >
       {link.label}
     </Anchor>

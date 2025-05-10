@@ -18,6 +18,24 @@ import { RegisterShelter } from './components/register/RegisterShelter';
 import { RegisterUser } from './components/register/RegisterUser';
 import { ShelterDashboard } from './components/shelter/ShelterDashboard';
 import { AddPet } from './components/pet/AddPet';
+import { PetDetails } from './components/user/PetDetails';
+import { UserDashBoard } from './components/user/UserDashBoard';
+import { AdoptionStatus } from './components/user/AdoptionStatus';
+import { ContactUs } from './components/contact/ContactUs';
+import AboutUs from './components/about/AboutUs';
+import { ManagePetsTable } from './components/shelter/ManagePets';
+import { PetsDashBoard } from './components/user/PetsDashBoard';
+import { ManageAdoptionsTable } from './components/shelter/ManageAdoptions';
+
+import PrivacyPolicy from './components/privacy/PrivacyPolicy';
+import BlogPage from './components/blog/Blog';
+import StorePage from './components/store/Store';
+import CareerPage from './components/career/Career';
+import PostQueryPage from './components/user/PostQueryPage';
+import ViewInquiriesPage from './components/shelter/ViewInquiryPage';
+import CourierService from './components/courier/CourierService';
+import { PaymentPage } from './components/user/PaymentPage';
+
 
 function App() {
   return (
@@ -30,7 +48,23 @@ function App() {
         <Route path="/login/shelter" element={<ShelterLogin />} />
         <Route path="/register/shelter" element={<RegisterShelter />} />
         <Route path="/shelter/dashboard" element={<ShelterDashboard />} />
+        <Route path="/pets" element={<PetsDashBoard />} />
         <Route path="/add/pet" element={<AddPet />} />
+        <Route path="/pet/:petId" element={<PetDetails />} />
+        <Route path="/user/dashboard" element={<UserDashBoard />} />
+        <Route path="/user/adoptions" element={<AdoptionStatus />} />
+        <Route path="/contact/contactus" element={<ContactUs />} />
+        <Route path="/about/aboutus" element={<AboutUs />} />
+        <Route path="/manage/pets" element={<ManagePetsTable />} />
+        <Route path="/privacy/policy" element={<PrivacyPolicy />} />
+        <Route path="/blog/blog" element={<BlogPage />} />
+        <Route path="/store/store" element={<StorePage />} />
+        <Route path="/career/career" element={<CareerPage />} />
+        <Route path="/user/post" element={<PostQueryPage />} />
+        <Route path="/shelter/viewinquiry" element={<ViewInquiriesPage />} />
+        <Route path="/manage/adoptions" element={<ManageAdoptionsTable />} />
+        <Route path="shelter/courier" element={<CourierService />} />
+        <Route path="/payment/:adoptionId" element={<PaymentPage />} />
       </Routes>
     </Router>
   );
